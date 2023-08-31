@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+selected=$1
+tmux_running=$(pgrep "TMUX")
+
+if [[ !has-session $selected ]] && [[ -z tmux_running ]]; then
+    tmux new-session -t $selected
+    exit 0
+fi
