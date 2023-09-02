@@ -14,7 +14,7 @@ end
 
 
 -- Better way to save files
-keymap.set('n', '<leader>w', '<cmd>w<cr>', opts)
+keymap.set('n', '<leader>w', cmd('w'), opts)
 
 -- Better way to quit files 
 keymap.set('n', '<leader>q', cmd('q'), opts)
