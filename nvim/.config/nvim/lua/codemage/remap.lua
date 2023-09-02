@@ -19,3 +19,6 @@ keymap.set('n', '<leader>w', '<cmd>w<cr>', opts)
 -- Better way to quit files 
 keymap.set('n', '<leader>q', cmd('q'), opts)
 
+-- hoping out of vim faster
+keymap.set({'i', 't'}, 'jj', '<esc>l', opts)
+

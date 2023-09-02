@@ -8,3 +8,4 @@ vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { silent = true } )
 
 require('codemage.opts')
 require('codemage.remap')
+require('codemage.plug')

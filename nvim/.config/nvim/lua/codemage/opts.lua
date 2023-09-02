@@ -30,3 +30,6 @@ opt.hlsearch = false
 -- indent
 opt.smartindent = true
 
+-- splits
+opt.splitbelow = true
+opt.splitright = true
