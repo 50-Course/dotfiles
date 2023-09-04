@@ -1,6 +1,5 @@
 -- [[ plug.lua ]] --
---
--- One-house shop for managing external and internal dependencies
+
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -14,12 +13,31 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-return require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
-  use 'neovim/nvim-lspconfig'
-  
+-- auto-update packer upon file change
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
+]])
 
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
+
+-- dependencies/plugins 
+local function spec(use) 
+  use 'wbthomason/packer.nvim'
+
+  -- LSP
+  use {
+      "neovim/nvim-lspconfig",
+  }
+
+  
+   if packer_bootstrap then
+       require('packer').sync()
+   end
+end
+
+
+return require('packer').startup {
+    spec,
+}

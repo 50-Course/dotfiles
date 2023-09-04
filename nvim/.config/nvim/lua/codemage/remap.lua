@@ -20,3 +20,5 @@ keymap.set('n', '<leader>q', cmd('q'), opts)
 -- hoping out of vim faster
 keymap.set({'i', 't'}, 'jj', '<esc>l', opts)
 
+-- you gonna love this, leader-X to make shell script to excutables? fill me in!
+
