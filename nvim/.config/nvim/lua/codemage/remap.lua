@@ -7,9 +7,7 @@ local opts = { silent = true, noremap = true }
 
 
 local function cmd(string)
-   local cmd_arg = "<Cmd>"..string.."<cr>"
-
-   return cmd_arg
+   return "<Cmd>"..string.."<cr>"
 end
 
 
