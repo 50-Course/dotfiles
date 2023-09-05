@@ -1,6 +1,11 @@
 -- [[ opts.lua]] --
 --
 -- Set user-defined settings for the editor in this file
+--
+-- Consult the help documentation for settings that is unclear to you,
+-- `:h vim.opt` or `:h [setting]` would display relevant documentation
+--
+-- e.g: `:h tabstop` or `:h clipboard`
 
 local opt = vim.opt
 
@@ -33,3 +38,10 @@ opt.smartindent = true
 -- splits
 opt.splitbelow = true
 opt.splitright = true
+
+-- better completion experience
+--
+-- menu: allows pop-up upon entering some text
+-- preview: display extra information about selected completion
+-- noselect: forces user to select a suggestion, setting default to false
+opt.completeopt = 'menu,preview,noselect'

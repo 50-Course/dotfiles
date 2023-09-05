@@ -28,10 +28,53 @@ local function spec(use)
 
   -- LSP
   use {
-      "neovim/nvim-lspconfig",
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+
+    -- Completions
+    {
+        "saadparwaiz1/cmp_luasnip",
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'hrsh7th/nvim-cmp',
+
+        -- Snippets and snippets completions
+        {
+            'L3MON4D3/LuaSnip'
+            'saadparwaiz1/cmp_luasnip'
+        }
+    }
   }
 
+  -- Treesitter
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+
+        -- Making treesitter more smarter
+        {
+        "nvim-treesitter/nvim-treesitter-textobjects"
+        }
+    }
   
+  -- themes
+    use {
+      "folke/tokyonight.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {},
+    }
+
+    use {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    }
+
    if packer_bootstrap then
        require('packer').sync()
    end

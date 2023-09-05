@@ -1,2 +1,4 @@
+column_width = 100
+indent_type = 2
 indent_type = "Spaces"
 no_call_parentheses = true

@@ -11,12 +11,15 @@ local function cmd(string)
 end
 
 
+-- Quick save
 -- Better way to save files
 keymap.set('n', '<leader>w', cmd('w'), opts)
 
+-- Quick exit
 -- Better way to quit files 
 keymap.set('n', '<leader>q', cmd('q'), opts)
 
+-- Escape key remastered
 -- hoping out of vim faster
 keymap.set({'i', 't'}, 'jj', '<esc>l', opts)
 
