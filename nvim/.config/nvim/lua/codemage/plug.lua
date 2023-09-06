@@ -132,6 +132,7 @@ local function spec(use)
 
         -- Github Copilot -- testing
         'github/copilot.vim',
+        'mbbill/undotree'
 
     }
 
