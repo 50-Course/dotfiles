@@ -42,13 +42,16 @@ local function spec(use)
 
         -- Snippets and snippets completions
         {
-            'L3MON4D3/LuaSnip'
-            'saadparwaiz1/cmp_luasnip'
+            'L3MON4D3/LuaSnip',
+            requires = { "rafamadriz/friendly-snippets" },
         }
     }
   }
-
-  -- Treesitter
+  
+    -- Treesitter
+    --
+    -- This plugin is a language parser that runs through code context,
+    -- giving in things like file-based syntax highlighting
     use {
         'nvim-treesitter/nvim-treesitter',
         run = function()
@@ -58,16 +61,78 @@ local function spec(use)
 
         -- Making treesitter more smarter
         {
-        "nvim-treesitter/nvim-treesitter-textobjects"
+            "nvim-treesitter/nvim-treesitter-textobjects"
         }
     }
   
-  -- themes
+    -- Themes
+    -- 
     use {
       "folke/tokyonight.nvim",
       lazy = false,
       priority = 1000,
       opts = {},
+    }
+    
+    -- Git
+    --
+    -- Git integreation allows native use of Git in Vim, we could use things
+    -- like G, Gdiff (for Git diff), and all
+    use { 
+        "tpope/vim-fugitive",
+        "lewis6991/gitsigns.nvim"
+    }
+
+    -- Include other LSP sources
+    --
+    -- This plugin makes it possible to use external tools and treat them
+    -- as sources that will be plugged into the LSP ecosystem.
+    -- By using this in combination with Mason, I can add tools like Black
+    -- without installing a dedicated Black plugin.
+    use "jose-elias-alvarez/null-ls.nvim"
+
+    -- Fuzzy finding for the meek
+    --
+    -- A bit of context here, we need away to quickly search through files
+    -- Telescope is an extension that does just that, with fuzzy matching algo
+    --
+    -- I am taking advantage of FZF here to extend telescope capabilities
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.2',
+         requires = { {'nvim-lua/plenary.nvim'} },
+        {
+            'nvim-telescope/telescope-fzf-native.nvim', run = 'make'
+        }
+    }
+
+    -- Debugging and Testing
+    use {
+        "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
+        'vim-test/vim-test'
+    }
+
+    -- Others, brackets autopairing, comments 
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end,
+
+        -- Terminal
+        {
+            "akinsho/toggleterm.nvim", tag = '*', config = function()
+                  require("toggleterm").setup()
+            end,
+
+            'akinsho/flutter-tools.nvim',
+            requires = {
+                'nvim-lua/plenary.nvim',
+            },
+        },
+
+        -- Github Copilot -- testing
+        'github/copilot.vim',
+
     }
 
     use {
