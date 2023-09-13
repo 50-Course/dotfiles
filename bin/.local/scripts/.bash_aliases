@@ -24,12 +24,5 @@ mdm() {
 }
 
 log() {
-    # get the current branch otherwise default to none
-    curr_branch=$1
-
-    if [[ ! -z curr_branch ]]; then
-        git log --oneline --graph curr_branch
-    fi
-    # Prints my git log in pretty format
     git log --oneline --graph main
 }
