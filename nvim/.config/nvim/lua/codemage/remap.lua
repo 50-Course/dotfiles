@@ -25,3 +25,10 @@ keymap.set({'i', 't'}, 'jj', '<esc>l', opts)
 
 -- you gonna love this, leader-X to make shell script to excutables? fill me in!
 
+-- faster history navigation with undo-tree
+keymap.set('n', 'A-u', cmd('UndoTreeToggle'), { desc = '[T]oggle [U]ndotree'})
+
+-- Toggle Netrw
+keymap.set('n', '<leader>pv', vim.cmd.Ex)
+
+

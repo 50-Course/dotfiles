@@ -44,4 +44,4 @@ opt.splitright = true
 -- menu: allows pop-up upon entering some text
 -- preview: display extra information about selected completion
 -- noselect: forces user to select a suggestion, setting default to false
-opt.completeopt = 'menu,preview,noselect'
+opt.completeopt = 'menu,menuone,noselect'

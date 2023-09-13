@@ -13,6 +13,8 @@
 
 
 local lspconfig = require('lspconfig')
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 
 vim.keymap.set('n', 'fd', vim.diagnostic.goto_prev)
 vim.keymap.set('n', 'pd', vim.diagnostic.goto_next)
@@ -26,8 +28,6 @@ local on_attach = function(client, buffr)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, buff_opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, buff_opts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, buff_opts)
-    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, buff_opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, buff_opts)
     vim.keymap.set('n', '<leader>td', vim.lsp.buf.type_definition, buff_opts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, buff_opts)
     vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, buff_opts)
@@ -39,12 +39,41 @@ local on_attach = function(client, buffr)
         group = vim.api.nvim_create_augroup('LspFormatting', {clear=true}),
         buffer = buffr,
         callback = function()
-            print('Formatting...')
             vim.lsp.buf.format()
-            print('Formatting Completed')
         end
     })
 end
 
+-- Setup LSP servers
 
+-- Python
+require('lspconfig')['pyright'].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetype = {'python'}
+}
 
+-- Go
+require('lspconfig')['gopls'].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+            },
+            staticcheck = true,
+        }
+    }
+}
+
+-- Autoconfigure other servers installed with Mason, add capabilities
+-- and attach to buffers
+local servers = { 'rust_analyzer', 'tsserver', 'bashls', 'vimls', 'yamlls' }
+
+for _, server in ipairs(servers) do
+    lspconfig[server].setup {
+        on_attach = on_attach,
+        capabilities = capabilities
+    }
+end

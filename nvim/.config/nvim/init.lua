@@ -9,4 +9,5 @@ vim.cmd [[ colorscheme tokyonight-night ]]
 require('codemage.opts')
 require('codemage.remap')
 require('codemage.plug')
+require('codemage.plugin_config.cmp')
 

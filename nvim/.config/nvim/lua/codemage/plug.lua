@@ -1,14 +1,14 @@
 -- [[ plug.lua ]] --
 
 local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+    local fn = vim.fn
+    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
 end
 
 local packer_bootstrap = ensure_packer()
@@ -16,38 +16,38 @@ local packer_bootstrap = ensure_packer()
 -- auto-update packer upon file change
 vim.cmd([[
   augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  autocmd!
+  autocmd BufWritePost plugins.lua source <afile> | PackerCompile
   augroup end
 ]])
 
 
 -- dependencies/plugins 
 local function spec(use) 
-  use 'wbthomason/packer.nvim'
+    use 'wbthomason/packer.nvim'
 
-  -- LSP
-  use {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
+    -- LSP
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
 
-    -- Completions
-    {
-        "saadparwaiz1/cmp_luasnip",
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'hrsh7th/nvim-cmp',
-
-        -- Snippets and snippets completions
+        -- Completions
         {
-            'L3MON4D3/LuaSnip',
-            requires = { "rafamadriz/friendly-snippets" },
+            "saadparwaiz1/cmp_luasnip",
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+            'hrsh7th/nvim-cmp',
+
+            -- Snippets and snippets completions
+            {
+                'L3MON4D3/LuaSnip',
+                requires = { "rafamadriz/friendly-snippets" },
+            }
         }
     }
-  }
-  
+
     -- Treesitter
     --
     -- This plugin is a language parser that runs through code context,
@@ -64,16 +64,18 @@ local function spec(use)
             "nvim-treesitter/nvim-treesitter-textobjects"
         }
     }
-  
+
     -- Themes
     -- 
     use {
-      "folke/tokyonight.nvim",
-      lazy = false,
-      priority = 1000,
-      opts = {},
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
     }
-    
+
+    use({ 'rose-pine/neovim', as = 'rose-pine' })
+
     -- Git
     --
     -- Git integreation allows native use of Git in Vim, we could use things
@@ -89,8 +91,9 @@ local function spec(use)
     -- as sources that will be plugged into the LSP ecosystem.
     -- By using this in combination with Mason, I can add tools like Black
     -- without installing a dedicated Black plugin.
-    use "jose-elias-alvarez/null-ls.nvim"
+    use 'jose-elias-alvarez/null-ls.nvim'
 
+    use {'nvim-lua/plenary.nvim'}
     -- Fuzzy finding for the meek
     --
     -- A bit of context here, we need away to quickly search through files
@@ -99,7 +102,6 @@ local function spec(use)
     -- I am taking advantage of FZF here to extend telescope capabilities
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
-         requires = { {'nvim-lua/plenary.nvim'} },
         {
             'nvim-telescope/telescope-fzf-native.nvim', run = 'make'
         }
@@ -107,7 +109,8 @@ local function spec(use)
 
     -- Debugging and Testing
     use {
-        "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"},
+        "mfussenegger/nvim-dap",
+        "rcarriga/nvim-dap-ui", 
         'vim-test/vim-test'
     }
 
@@ -121,7 +124,7 @@ local function spec(use)
         -- Terminal
         {
             "akinsho/toggleterm.nvim", tag = '*', config = function()
-                  require("toggleterm").setup()
+                require("toggleterm").setup()
             end,
 
             'akinsho/flutter-tools.nvim',
@@ -132,8 +135,12 @@ local function spec(use)
 
         -- Github Copilot -- testing
         'github/copilot.vim',
-        'mbbill/undotree'
-
+        -- Managing history with UndoTree
+        'mbbill/undotree',
+        -- Java
+        'mfussenegger/nvim-jdtls',
+        -- Vim with the cool tmux splits
+        'christoomey/vim-tmux-navigator',
     }
 
     use {
@@ -141,9 +148,10 @@ local function spec(use)
         config = function() require("nvim-autopairs").setup {} end
     }
 
-   if packer_bootstrap then
-       require('packer').sync()
-   end
+
+    if packer_bootstrap then
+        require('packer').sync()
+    end
 end
 
 

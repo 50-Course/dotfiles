@@ -15,7 +15,7 @@ local servers = {
     'pyright',  -- Python
     'clangd',   -- C/C++
     'lua_ls',   -- Lua
-    'rust_analyzer' -- Rust
+    'rust_analyzer', -- Rust
 }
 
 require("mason-lspconfig").setup {
