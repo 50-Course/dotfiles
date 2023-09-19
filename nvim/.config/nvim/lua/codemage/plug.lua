@@ -39,6 +39,7 @@ local function spec(use)
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
             'hrsh7th/nvim-cmp',
+            'hrsh7th/cmp-cmdline',
 
             -- Snippets and snippets completions
             {
@@ -58,11 +59,6 @@ local function spec(use)
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
         end,
-
-        -- Making treesitter more smarter
-        {
-            "nvim-treesitter/nvim-treesitter-textobjects"
-        }
     }
 
     -- Themes
@@ -119,20 +115,20 @@ local function spec(use)
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
+        end
+    }
+
+    -- 
+    -- Terminal
+    use {
+        "akinsho/toggleterm.nvim", tag = '*', config = function()
+            require("toggleterm").setup()
         end,
+    }
 
-        -- Terminal
-        {
-            "akinsho/toggleterm.nvim", tag = '*', config = function()
-                require("toggleterm").setup()
-            end,
+    use {
 
-            'akinsho/flutter-tools.nvim',
-            requires = {
-                'nvim-lua/plenary.nvim',
-            },
-        },
-
+        'akinsho/flutter-tools.nvim',
         -- Github Copilot -- testing
         'github/copilot.vim',
         -- Managing history with UndoTree
@@ -142,6 +138,7 @@ local function spec(use)
         -- Vim with the cool tmux splits
         'christoomey/vim-tmux-navigator',
     }
+
 
     use {
         "windwp/nvim-autopairs",

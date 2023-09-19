@@ -12,7 +12,7 @@
 if ! command -v fzf &>/dev/null; then
     echo "Fzf is not installed on this machine dude, reinstall your dotfiles"
 
-    exit 2;
+    exit -1;
 fi
 
 

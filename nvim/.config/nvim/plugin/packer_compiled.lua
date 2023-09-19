@@ -89,6 +89,11 @@ _G.packer_plugins = {
     path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/cmp-buffer",
     url = "https://github.com/hrsh7th/cmp-buffer"
   },
+  ["cmp-cmdline"] = {
+    loaded = true,
+    path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
+    url = "https://github.com/hrsh7th/cmp-cmdline"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -150,6 +155,11 @@ _G.packer_plugins = {
     path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
   ["nvim-dap-ui"] = {
     loaded = true,
     path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
@@ -169,11 +179,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
-  },
-  ["nvim-treesitter-textobjects"] = {
-    loaded = true,
-    path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects",
-    url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
   },
   ["packer.nvim"] = {
     loaded = true,
