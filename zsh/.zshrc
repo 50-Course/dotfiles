@@ -100,9 +100,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-if [[ -f '~/.bash_aliases' ]]; then
-    source '~/.bash_aliases'
-fi
+[ -f ~/.bash_aliases ] && source ~/.bash_aliases
 
 # Java SDK
 export SDKMAN_DIR="$HOME/.sdkman"
