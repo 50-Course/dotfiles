@@ -108,3 +108,15 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Go SDK
+export PATH=$PATH:/usr/local/go/bin
+
+# My local scripts folder
+PATH="$PATH":"$HOME/.local/scripts/"
+
+alias vi='nvim'
+
+# Quick project workspace navigator with Tmux sessionizer
+bindkey -s ^f "tmux-sess-man\n"
+
