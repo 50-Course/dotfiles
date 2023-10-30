@@ -1,13 +1,8 @@
-print("Welcome to Vim, @codemage")
-
-
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { silent = true } )
-vim.cmd [[ colorscheme tokyonight-night ]]
-
-require('codemage.opts')
-require('codemage.remap')
-require('codemage.plug')
-require('codemage.plugin_config.cmp')
-
+require('settings')
+require('keymaps')
+require('plugins')
+require('lsp')
+require('null-ls')
+require('telescope')
+require('treesitter')
+require('color')
