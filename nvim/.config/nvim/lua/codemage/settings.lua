@@ -33,3 +33,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
     pattern = "*",
 })
+
+vim.g["test#strategy"] = "neovim"
+vim.g["test#neovim#term_repl_open_cmd"] = "vsplit"
+vim.g["test#neovim#term_position"] = "vert"
+vim.g["#test#custom_runners"] = {
+    {
+        name = "pytest",
+        cmd = { "pytest", "-s", "-vv", "-x", "--ff", "-k" },
+        tempfile_pattern = {"test_*.py", "tests_*.py", "*_test.py", "tests.py"},
+    },
+}

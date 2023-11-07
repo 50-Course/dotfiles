@@ -35,3 +35,10 @@ keymap.set("n", "<leader>gp", "<cmd>Git push<cr>")
 keymap.set("n", "<leader>gl", "<cmd>Git pull<cr>")
 keymap.set("n", "<leader>gb", "<cmd>Git blame<cr>")
 keymap.set("n", "<leader>gd", "<cmd>Git diff<cr>")
+
+-- Testing
+keymap.set("n", "<leader>tn", "<cmd>TestNearest<cr>")
+keymap.set("n", "<leader>tf", "<cmd>TestFile<cr>")
+keymap.set("n", "<leader>ts", "<cmd>TestSuite<cr>")
+keymap.set("n", "<leader>tl", "<cmd>TestLast<cr>")
+
