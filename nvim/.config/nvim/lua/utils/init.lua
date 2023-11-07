@@ -18,13 +18,13 @@ local M = {}
 ---
 --- Context in here refers to what is been mapped, is it a function, a callback or what?
 --- @param desc string Human-readable translation of provided mapping
---- @param mode string | table Vim's internal mode to map a context to 
+--- @param mode string | table Vim's internal mode to map a context to
 --- @param lhs string Key or chord to map a function, context to
 --- @param rhs string Context being mapped to
 M.remap = function(mode, lhs, rhs, buffopts, desc)
-    if desc then buffopts.desc = desc or '' end
+  if desc then buffopts.desc = desc or "" end
 
-    vim.keymap.set(mode, lhs, rhs, buffopts)
+  vim.keymap.set(mode, lhs, rhs, buffopts)
 end
 
 return M

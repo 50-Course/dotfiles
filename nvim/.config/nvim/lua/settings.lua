@@ -13,7 +13,7 @@ vim.wo.relativenumber = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 -- Fat cursor is everything, what can I say? We pimp dhem holes ^_^
-vim.opt.guicursor = ''
+vim.opt.guicursor = ""
 -- Yaay indenting!
 -- Vim be smart about my indenting
 vim.opt.smartindent = true
@@ -26,16 +26,15 @@ vim.opt.updatetime = 50
 -- No fuckin' way would I tolerate text-wrapped
 vim.opt.wrap = false
 -- Talmabout good completion experience
-vim.opt.completeopt = 'menuone,noselect,preview'
+vim.opt.completeopt = "menuone,noinsert,noselect"
 
 -- Set the number of reserved lines at the top and bottom before scrolling starts
 vim.wo.scrolloff = 8
 
 -- Highlight on cursor, when yanking
-local highlight_text = vim.api.nvim_create_augroup('YankMeDaddy', {clear=true})
-vim.api.nvim_create_autocmd('TextYankPost', {
-    group = highlight_text,
-    callback = function() vim.highlight.on_yank() end,
-    pattern = '*',
+local highlight_text = vim.api.nvim_create_augroup("YankMeDaddy", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = highlight_text,
+  callback = function() vim.highlight.on_yank() end,
+  pattern = "*",
 })
-

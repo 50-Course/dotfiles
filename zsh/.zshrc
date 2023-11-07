@@ -105,8 +105,12 @@ source $ZSH/oh-my-zsh.sh
 # Java SDK
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+# Android SDK
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-
+# Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Go SDK
@@ -119,4 +123,13 @@ alias vi='nvim'
 
 # Quick project workspace navigator with Tmux sessionizer
 bindkey -s ^f "tmux-sess-man\n"
+
+# PNPM
+export PNPMPATH="$HOME/.pnpm-global/bin"
+alias pn='pnpm'
+# Npx but uses PNPM
+alias pnx="npm_execpath=$(which pnpm) npx"
+
+# Add PNPM to PATH
+export PATH="$PNPMPATH:$PATH"
 

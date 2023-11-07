@@ -6,10 +6,17 @@
 -- For convinence, you may want to follow the cool chads to use `lazy.nvim`
 local ensure_packer = function()
   local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
   if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
+    fn.system({
+      "git",
+      "clone",
+      "--depth",
+      "1",
+      "https://github.com/wbthomason/packer.nvim",
+      install_path,
+    })
+    vim.cmd([[packadd packer.nvim]])
     return true
   end
   return false
@@ -17,72 +24,80 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-return require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
+return require("packer").startup(function(use)
+  use("wbthomason/packer.nvim")
 
   -- Treesitter
   --
   -- Language parser that provides highlighting, errors, jump to definitions, etc
-  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-  use('nvim-treesitter/nvim-treesitter-textobjects')
+  use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
+  use("nvim-treesitter/nvim-treesitter-textobjects")
 
   -- Harpoon for quick files navigation
-  use('nvim-lua/plenary.nvim')
-  use('ThePrimeagen/harpoon')
+  use("nvim-lua/plenary.nvim")
+  use("ThePrimeagen/harpoon")
 
   -- Fuzzy-searching with Telescope
-  use {
-      'nvim-telescope/telescope.nvim', tag = '0.1.4',
-      -- or                            , branch = '0.1.x',
-      requires = { {'nvim-lua/plenary.nvim'} }
-  }
+  use({
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.4",
+    -- or                            , branch = '0.1.x',
+    requires = { { "nvim-lua/plenary.nvim" } },
+  })
   -- Comments are just awesome
-  use {
-      'numToStr/Comment.nvim',
-      config = function()
-          require('Comment').setup()
-      end
-  }
+  use({
+    "numToStr/Comment.nvim",
+    config = function() require("Comment").setup() end,
+  })
 
   -- Themes
   --
-  -- I love Tokyonight
-  use { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {}, }
+  -- I love Tokyonight, and Rose-pine (Just for that transp
+  use({ "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} })
+  use({ "rose-pine/neovim", as = "rose-pine" })
 
   -- Language Server and its essentials
   --
   -- Completion engines, snippets, and lsp manager
-  use 'neovim/nvim-lspconfig'
-  use 'williamboman/mason.nvim'
-  use 'williamboman/mason-lspconfig.nvim'
+  use("neovim/nvim-lspconfig")
+  use("williamboman/mason.nvim")
+  use("williamboman/mason-lspconfig.nvim")
 
   -- autocompletion support for lsp
   -- Autocompletion
-  use {
-      {'hrsh7th/nvim-cmp'},
-      {'hrsh7th/cmp-nvim-lsp'},
-      "saadparwaiz1/cmp_luasnip",
-  }
-  use {'L3MON4D3/LuaSnip'
-
-  } -- snippet engine
+  use({
+    { "hrsh7th/nvim-cmp" },
+    { "hrsh7th/cmp-nvim-lsp" },
+    "saadparwaiz1/cmp_luasnip",
+  })
+  use({ "L3MON4D3/LuaSnip", requires = { "rafamadriz/friendly-snippets" } }) -- snippet engine
 
   -- Wakatime
-  use 'wakatime/vim-wakatime'
+  use("wakatime/vim-wakatime")
 
   -- git integration, surrounds and copilot
-  use 'tpope/vim-fugitive'
-  use "tpope/vim-surround"
-  use "github/copilot.vim"
+  use({ "tpope/vim-fugitive"})
+  use("tpope/vim-surround")
+  use("github/copilot.vim")
+  use("mbbill/undotree")
+
+  use({
+    "akinsho/flutter-tools.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+    },
+  })
 
   -- TODO: Debugging with Nvim DAP & DAP UI
-  -- TODO: Tests with Vim-test
+  -- Tests with Vim-test
+  use({ "vim-test/vim-test" })
+
   -- TODO: Linter and Formatter with NullLS
-  use "jose-elias-alvarez/null-ls.nvim" 
+  use({"jose-elias-alvarez/null-ls.nvim", config = function()
+    require("null-ls").setup()
+  end})
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require('packer').sync()
-  end
+  if packer_bootstrap then require("packer").sync() end
 end)
