@@ -18,7 +18,6 @@ local diag_sources = {
     null_ls.builtins.diagnostics.mypy,
 }
 
-print("null-ls setup")
 null_ls.setup({
     sources = format_sources,
 })

@@ -103,6 +103,11 @@ local no_errors, error_msg = pcall(function()
             path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/Comment.nvim",
             url = "https://github.com/numToStr/Comment.nvim",
         },
+        LuaSnip = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/LuaSnip",
+            url = "https://github.com/L3MON4D3/LuaSnip",
+        },
         ["cmp-buffer"] = {
             loaded = true,
             path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -261,6 +266,7 @@ local no_errors, error_msg = pcall(function()
     time([[Config for nvim-autopairs]], false)
     -- Load plugins in order defined by `after`
     time([[Sequenced loading]], true)
+    vim.cmd([[ packadd LuaSnip ]])
     vim.cmd([[ packadd nvim-cmp ]])
     vim.cmd([[ packadd friendly-snippets ]])
     vim.cmd([[ packadd nvim-treesitter ]])
