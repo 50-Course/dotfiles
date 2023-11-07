@@ -1,9 +1,17 @@
-require("settings")
-require("keymaps")
-require("plugins")
-require("lsp")
-require("null-ls")
-require("telescope")
-require("treesitter")
-require("color")
-require("utils.testing")
+------------------------------------------
+--- PERSONAL DEVELOPMENT ENVIRONMENT
+---
+--- Author: Eri (@50Course/@codemage)
+--- License: MIT License
+------------------------------------------
+
+is_linux = vim.uv.os_uname().sys_name == "linux"
+is_macos = vim.uv.os_uname().sys_name == "darwin"
+
+if is_macos then
+    return "ERROR: Vim Conf not yet implemented"
+end
+
+require("codemage.settings")
+require("codemage.plugins")
+require("codemage.keymaps")
