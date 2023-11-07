@@ -41,4 +41,3 @@ keymap.set("n", "<leader>tn", "<cmd>TestNearest<cr>")
 keymap.set("n", "<leader>tf", "<cmd>TestFile<cr>")
 keymap.set("n", "<leader>ts", "<cmd>TestSuite<cr>")
 keymap.set("n", "<leader>tl", "<cmd>TestLast<cr>")
-

@@ -103,15 +103,52 @@ local no_errors, error_msg = pcall(function()
             path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/Comment.nvim",
             url = "https://github.com/numToStr/Comment.nvim",
         },
+        ["cmp-buffer"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/cmp-buffer",
+            url = "https://github.com/hrsh7th/cmp-buffer",
+        },
+        ["cmp-nvim-lsp"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+            url = "https://github.com/hrsh7th/cmp-nvim-lsp",
+        },
+        ["cmp-nvim-lua"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/cmp-nvim-lua",
+            url = "https://github.com/hrsh7th/cmp-nvim-lua",
+        },
+        ["cmp-path"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/cmp-path",
+            url = "https://github.com/hrsh7th/cmp-path",
+        },
         ["copilot.vim"] = {
             loaded = true,
             path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/copilot.vim",
             url = "https://github.com/github/copilot.vim",
         },
+        ["friendly-snippets"] = {
+            load_after = {},
+            loaded = true,
+            needs_bufread = false,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/opt/friendly-snippets",
+            url = "https://github.com/rafamadriz/friendly-snippets",
+        },
         harpoon = {
             loaded = true,
             path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/harpoon",
             url = "https://github.com/ThePrimeagen/harpoon",
+        },
+        ["mason-lspconfig.nvim"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+            url = "https://github.com/williamboman/mason-lspconfig.nvim",
+        },
+        ["mason.nvim"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/mason.nvim",
+            url = "https://github.com/williamboman/mason.nvim",
         },
         ["null-ls.nvim"] = {
             loaded = true,
@@ -125,6 +162,26 @@ local no_errors, error_msg = pcall(function()
             loaded = true,
             path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
             url = "https://github.com/windwp/nvim-autopairs",
+        },
+        ["nvim-cmp"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+            url = "https://github.com/hrsh7th/nvim-cmp",
+        },
+        ["nvim-dap"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-dap",
+            url = "https://github.com/mfussenegger/nvim-dap",
+        },
+        ["nvim-dap-ui"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+            url = "https://github.com/rcarriga/nvim-dap-ui",
+        },
+        ["nvim-lspconfig"] = {
+            loaded = true,
+            path = "/home/erioluwa/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+            url = "https://github.com/neovim/nvim-lspconfig",
         },
         ["nvim-treesitter"] = {
             loaded = true,
@@ -186,14 +243,6 @@ local no_errors, error_msg = pcall(function()
     }
 
     time([[Defining packer_plugins]], false)
-    -- Config for: nvim-autopairs
-    time([[Config for nvim-autopairs]], true)
-    try_loadstring(
-        "\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0",
-        "config",
-        "nvim-autopairs"
-    )
-    time([[Config for nvim-autopairs]], false)
     -- Config for: Comment.nvim
     time([[Config for Comment.nvim]], true)
     try_loadstring(
@@ -202,8 +251,18 @@ local no_errors, error_msg = pcall(function()
         "Comment.nvim"
     )
     time([[Config for Comment.nvim]], false)
+    -- Config for: nvim-autopairs
+    time([[Config for nvim-autopairs]], true)
+    try_loadstring(
+        "\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0",
+        "config",
+        "nvim-autopairs"
+    )
+    time([[Config for nvim-autopairs]], false)
     -- Load plugins in order defined by `after`
     time([[Sequenced loading]], true)
+    vim.cmd([[ packadd nvim-cmp ]])
+    vim.cmd([[ packadd friendly-snippets ]])
     vim.cmd([[ packadd nvim-treesitter ]])
     vim.cmd([[ packadd nvim-treesitter-textobjects ]])
     time([[Sequenced loading]], false)

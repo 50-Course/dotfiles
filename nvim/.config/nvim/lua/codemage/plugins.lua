@@ -22,7 +22,6 @@ local ensure_packer = function()
     end
     return false
 end
-
 local packer_bootstrap = ensure_packer()
 
 return require("packer").startup(function(use)
@@ -60,7 +59,6 @@ return require("packer").startup(function(use)
 
     use("github/copilot.vim")
     use("mbbill/undotree")
-    use("jose-elias-alvarez/null-ls.nvim")
     use("tpope/vim-fugitive")
     use("vim-test/vim-test")
     use({
@@ -68,6 +66,39 @@ return require("packer").startup(function(use)
         config = function()
             require("nvim-autopairs").setup({})
         end,
+    })
+
+    -- Language Server Protocol
+    --
+    -- I use the `mason` for automatic installation of server protocols,
+    -- `nvim-cmp` for completion, and `nvim-lspconfig` for configuration
+    -- of the LSP.
+    -- I also use `null-ls` for formatting and linting.
+    use({
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+    })
+    use({
+        "hrsh7th/nvim-cmp",
+        requires = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-nvim-lua",
+        },
+    })
+    -- friendly snippets for those vscode-like snippets
+    use({ "rafamadriz/friendly-snippets", after = "nvim-cmp" })
+    use({
+        "jose-elias-alvarez/null-ls.nvim",
+        requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    })
+
+    -- For debugging, I am using Nvim-dap and its UI
+    use({
+        "mfussenegger/nvim-dap",
+        requires = { "rcarriga/nvim-dap-ui" },
     })
 
     if packer_bootstrap then

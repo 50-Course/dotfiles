@@ -15,3 +15,4 @@ end
 require("codemage.settings")
 require("codemage.plugins")
 require("codemage.keymaps")
+require("codemage.lsp")

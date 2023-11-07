@@ -41,6 +41,11 @@ vim.g["#test#custom_runners"] = {
     {
         name = "pytest",
         cmd = { "pytest", "-s", "-vv", "-x", "--ff", "-k" },
-        tempfile_pattern = {"test_*.py", "tests_*.py", "*_test.py", "tests.py"},
+        tempfile_pattern = {
+            "test_*.py",
+            "tests_*.py",
+            "*_test.py",
+            "tests.py",
+        },
     },
 }
