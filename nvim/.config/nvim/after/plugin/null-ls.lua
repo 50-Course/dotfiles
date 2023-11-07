@@ -4,20 +4,24 @@ if not ok then
     return
 end
 
-local format_sources = {
-    null_ls.builtins.formatting.rustfmt,
-    null_ls.builtins.formatting.clang_format,
-    null_ls.builtins.formatting.lua_format,
-    null_ls.builtins.formatting.stylua,
-    null_ls.builtins.formatting.isort,
-    null_ls.builtins.formatting.black,
-    null_ls.builtins.formatting.shfmt,
-}
-
-local diag_sources = {
-    null_ls.builtins.diagnostics.mypy,
-}
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
 
 null_ls.setup({
-    sources = format_sources,
+    debug = false,
+    sources = {
+        formatting.rustfmt,
+        formatting.clang_format,
+        formatting.stylua,
+        formatting.isort,
+        formatting.black.with({ extra_args = { "--fast" } }),
+        formatting.shfmt,
+        diagnostics.flake8,
+        diagnostics.mypy,
+    },
 })
+
+-- Fomat Files on save
+vim.cmd([[
+    autocmd BufWritePre * lua vim.lsp.buf.format()
+]])
