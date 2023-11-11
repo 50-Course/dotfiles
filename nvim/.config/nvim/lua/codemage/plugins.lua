@@ -96,6 +96,9 @@ return require("packer").startup(function(use)
         requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     })
 
+    -- Java development
+    use("mfussenegger/nvim-jdtls")
+
     -- For debugging, I am using Nvim-dap and its UI
     use({
         "mfussenegger/nvim-dap",

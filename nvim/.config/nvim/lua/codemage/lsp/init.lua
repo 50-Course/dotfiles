@@ -81,7 +81,7 @@ local on_attach = function(client, bufnr)
     )
     map(
         "n",
-        "<leader>td",
+        "<leader>D",
         "<cmd>lua vim.lsp.buf.type_definition()<CR>",
         { noremap = true, silent = true, desc = "Goto Type Definition" }
     )
@@ -119,7 +119,7 @@ local on_attach = function(client, bufnr)
     )
     map(
         "n",
-        "<C-h>",
+        "<C-k>",
         "vim.lsp.buf.signature_help({focusable = false})",
         { noremap = true, silent = true }
     )

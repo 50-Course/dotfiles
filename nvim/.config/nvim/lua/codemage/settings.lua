@@ -22,6 +22,7 @@ vim.opt.wrap = false
 vim.opt.completeopt = "menu,preview,noinsert,noselect"
 vim.wo.scrolloff = 8
 vim.wo.sidescrolloff = 7
+vim.opt.swapfile = false
 
 -- Highlight on cursor, when yanking
 local highlight_text =

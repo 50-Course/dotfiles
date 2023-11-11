@@ -133,3 +133,5 @@ alias pnx="npm_execpath=$(which pnpm) npx"
 # Add PNPM to PATH
 export PATH="$PNPMPATH:$PATH"
 
+# Add `user scripts` to PATH
+export PATH="$HOME/.local/bin:$PATH"
