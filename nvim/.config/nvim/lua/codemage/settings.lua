@@ -19,10 +19,13 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.updatetime = 50
 vim.opt.wrap = false
-vim.opt.completeopt = "menu,preview,noinsert,noselect"
+vim.opt.completeopt = "menuone,noselect"
 vim.wo.scrolloff = 8
 vim.wo.sidescrolloff = 7
 vim.opt.swapfile = false
+
+vim.opt.undodir = vim.fn.expand("~/.config/nvim/undodir")
+vim.opt.undofile = true
 
 -- Highlight on cursor, when yanking
 local highlight_text =

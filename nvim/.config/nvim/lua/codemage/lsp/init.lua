@@ -119,8 +119,8 @@ local on_attach = function(client, bufnr)
     )
     map(
         "n",
-        "<C-k>",
-        "vim.lsp.buf.signature_help({focusable = false})",
+        "<C-K>",
+        "vim.lsp.buf.signature_help()",
         { noremap = true, silent = true }
     )
 end
