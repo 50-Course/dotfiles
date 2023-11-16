@@ -41,9 +41,43 @@ local config = {
         "-data",
         workspace_folder,
     },
+    flags = {
+        debounce_text_changes = 150,
+        allow_incremental_sync = true,
+    },
     root_dir = root_dir,
     settings = {
         java = {
+            signatureHelp = { enabled = true },
+            saveActions = {
+                organizeImports = true,
+            },
+            contentProvider = { preferred = "fernflower" },
+            completion = {
+                maxResults = 25,
+                favoriteStaticMembers = {
+                    "org.hamcrest.MatcherAssert.assertThat",
+                    "org.hamcrest.Matchers.*",
+                    "org.hamcrest.CoreMatchers.*",
+                    "org.junit.jupiter.api.Assertions.*",
+                    "java.util.Objects.requireNonNull",
+                    "java.util.Objects.requireNonNullElse",
+                    "org.mockito.Mockito.*",
+                    "org.mockito.ArgumentMatchers.*",
+                    "org.mockito.Answers.RETURNS_DEEP_STUBS",
+                },
+            },
+            sources = {
+                organizeImports = {
+                    starThreshold = 9999,
+                    staticStarThreshold = 9999,
+                },
+            },
+            codeGeneration = {
+                toString = {
+                    template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+                },
+            },
             configuration = {
                 runtimes = {
                     {

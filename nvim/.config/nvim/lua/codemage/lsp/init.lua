@@ -4,6 +4,7 @@ local capabalities = vim.lsp.protocol.make_client_capabilities()
 capabalities = require("cmp_nvim_lsp").default_capabilities(capabalities)
 
 local mason = require("mason")
+local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
 
 cmp.setup({
@@ -145,5 +146,21 @@ mason_lspconfig.setup_handlers({
             on_attach = on_attach,
             capabilities = capabalities,
         })
+    end,
+
+    ["lua_ls"] = function()
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = { "vim" },
+                },
+            },
+        }
+        local opts = {
+            on_attach = on_attach,
+            capabilities = capabalities,
+            settings = settings,
+        }
+        lspconfig["lua_ls"].setup(opts)
     end,
 })
