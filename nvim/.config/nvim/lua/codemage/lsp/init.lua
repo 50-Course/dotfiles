@@ -46,13 +46,19 @@ local on_attach = function(client, bufnr)
     )
     map(
         "n",
+        "<C-k>",
+        "<Cmd>lua vim.lsp.buf.signature_help()<CR>",
+        { noremap = true, silent = true, desc = "Show Signature Help" }
+    )
+    map(
+        "n",
         "gD",
         "<cmd>lua vim.lsp.buf.declaration()<CR>",
         { noremap = true, silent = true, desc = "Goto declaration" }
     )
     map(
         "n",
-        "rr",
+        "gr",
         "<cmd>lua vim.lsp.buf.references()<CR>",
         { noremap = true, silent = true, desc = "Goto references" }
     )
@@ -73,6 +79,12 @@ local on_attach = function(client, bufnr)
         "<leader>ca",
         "<cmd>lua vim.lsp.buf.code_action()<CR>",
         { noremap = true, silent = true, desc = "Code Action" }
+    )
+    map(
+        "n",
+        "gi",
+        "<cmd>lua vim.lsp.buf.implementation()<CR>",
+        { noremap = true, silent = true, desc = "Goto Implementation" }
     )
     map(
         "n",
@@ -118,12 +130,6 @@ local on_attach = function(client, bufnr)
         "<cmd>lua vim.lsp.diagnostic.code_action()<CR>",
         { noremap = true, silent = true, desc = "Code Action" }
     )
-    map(
-        "n",
-        "<C-K>",
-        "vim.lsp.buf.signature_help()",
-        { noremap = true, silent = true }
-    )
 end
 
 local servers = {
@@ -132,6 +138,8 @@ local servers = {
     "pyright", -- Python
     "lua_ls", -- Lua
     "rust_analyzer", -- Rust
+    "tsserver", -- TypeScript
+    "dockerls", -- Docker
 }
 
 mason.setup()
@@ -149,7 +157,7 @@ mason_lspconfig.setup_handlers({
     end,
 
     ["lua_ls"] = function()
-        settings = {
+        local settings = {
             Lua = {
                 diagnostics = {
                     globals = { "vim" },
@@ -162,5 +170,22 @@ mason_lspconfig.setup_handlers({
             settings = settings,
         }
         lspconfig["lua_ls"].setup(opts)
+    end,
+    ["gopls"] = function()
+        local opts = {
+            on_attach = on_attach,
+            capabilities = capabalities,
+            cmd = { "gopls" },
+            settings = {
+                gopls = {
+                    analyses = {
+                        unusedparams = true,
+                    },
+                    staticcheck = true,
+                    gofumpt = true,
+                },
+            },
+        }
+        lspconfig["gopls"].setup(opts)
     end,
 })
