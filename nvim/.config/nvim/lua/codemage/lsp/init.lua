@@ -2,6 +2,7 @@ local cmp = require("cmp")
 local capabalities = vim.lsp.protocol.make_client_capabilities()
 
 capabalities = require("cmp_nvim_lsp").default_capabilities(capabalities)
+require("luasnip.loaders.from_vscode").load()
 
 local mason = require("mason")
 local lspconfig = require("lspconfig")
@@ -16,7 +17,8 @@ cmp.setup({
     mapping = cmp.mapping.preset.insert({
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({
+        ["<C-x>"] = cmp.mapping.close(),
+        ["<C-y>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         }),

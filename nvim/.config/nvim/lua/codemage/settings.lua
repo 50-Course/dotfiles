@@ -27,6 +27,8 @@ vim.opt.swapfile = false
 vim.opt.undodir = vim.fn.expand("~/.config/nvim/undodir")
 vim.opt.undofile = true
 
+vim.opt.termguicolors = true
+
 -- ********************************************************
 -- Highlight on cursor, when yanking
 local highlight_text =

@@ -5,14 +5,12 @@
 --- License: MIT License
 ------------------------------------------
 
-local is_linux = vim.uv.os_uname().sys_name == "linux"
+local is_win = vim.uv.os_uname().sys_name == "Windows"
 local is_macos = vim.uv.os_uname().sys_name == "darwin"
 
 if is_macos then
     print("ERROR: Vim Conf not yet implemented")
-elseif is_linux then
-    print("ERROR: Vim Conf not yet implemented")
-else
+elseif is_win then
     print("ERROR: Vim Conf not yet implemented")
 end
 
