@@ -11,14 +11,15 @@ files for my development environments. This is a 'living' repository that would 
 ## Installation
 
 1. Clone this repository to your `$HOME` directory.
-2. Run `./install.sh` to symlink all the configuration files to `$HOME` using GNU Stow.
-3. _I am actively working on provide a comprehensive user guide, please stick with me _
+2. Run `./install.sh` to symlink all the configuration files to `$HOME` using ![GNU Stow][1]
+3. _I am actively working on provide a comprehensive user guide, please stick with me_
 
 ## Screenshots
 
 
 ## License
 
+```md
 MIT License
 
 Copyright (c) 2023 @50-Course
@@ -40,4 +41,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
 
+[1]:(https://www.gnu.org/software/stow/)
