@@ -2,7 +2,6 @@ local cmp = require("cmp")
 local capabalities = vim.lsp.protocol.make_client_capabilities()
 
 capabalities = require("cmp_nvim_lsp").default_capabilities(capabalities)
-require("luasnip.loaders.from_vscode").load()
 
 local mason = require("mason")
 local lspconfig = require("lspconfig")
@@ -35,6 +34,8 @@ cmp.setup({
         { name = "path" },
     }),
 })
+
+require("luasnip.loaders.from_vscode").load()
 
 local on_attach = function(client, bufnr)
     buffer = bufnr

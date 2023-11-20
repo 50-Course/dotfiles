@@ -90,4 +90,46 @@ local config = {
     },
 }
 
+-- Additional mappings
+local bufopts = { nnoremap = true }
+vim.keymap.set(
+    "n",
+    "<localleader>o",
+    " <Cmd>lua require'jdtls'.organize_imports()<CR>",
+    bufopts
+)
+vim.keymap.set(
+    "n",
+    "<localleader>ev",
+    " <Cmd>lua require('jdtls').extract_variable()<CR>",
+    bufopts
+)
+vim.keymap.set(
+    "v",
+    "<localleader>ev",
+    " <Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>",
+    bufopts
+)
+vim.keymap.set(
+    "n",
+    "<localleader>ec",
+    " <Cmd>lua require('jdtls').extract_constant()<CR>",
+    bufopts
+)
+vim.keymap.set(
+    "v",
+    "<localleader>ec",
+    " <Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>",
+    bufopts
+)
+vim.keymap.set(
+    "v",
+    "<localleader>em",
+    " <Esc><Cmd>lua require('jdtls').extract_method(true)<CR>",
+    bufopts
+)
+
+-- For testing
+-- vim.keymap.set("n", , , bufopts) <leader>df <Cmd>lua require'jdtls'.test_class()<CR>
+-- vim.keymap.set("n", , , bufopts) <leader>dn <Cmd>lua require'jdtls'.test_nearest_method()<CR>
 require("jdtls").start_or_attach(config)
