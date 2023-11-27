@@ -37,20 +37,9 @@ cmp.setup({
         { name = "luasnip" },
     }, {
         { name = "buffer" },
-        { name = "path" },
     }),
 })
 
--- Command-line completion
-
-cmp.setup.cmdline(":", {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = "path" },
-    }, {
-        { name = "cmdline" },
-    }),
-})
 
 -- return the way cmp should be formatted for the lsp
 local on_attach = function(client, bufnr)
@@ -140,13 +129,13 @@ local on_attach = function(client, bufnr)
 end
 
 local servers = {
-    "clangd", -- C/C++
-    "gopls", -- Go
-    "pyright", -- Python
-    "lua_ls", -- Lua
+    "clangd",        -- C/C++
+    "gopls",         -- Go
+    "pyright",       -- Python
+    "lua_ls",        -- Lua
     "rust_analyzer", -- Rust
-    "tsserver", -- TypeScript
-    "dockerls", -- Docker
+    "tsserver",      -- TypeScript
+    "dockerls",      -- Docker
 }
 
 mason.setup()
