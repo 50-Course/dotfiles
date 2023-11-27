@@ -91,7 +91,7 @@ local config = {
 }
 
 -- Additional mappings
-local bufopts = { nnoremap = true }
+local bufopts = { noremap = true }
 vim.keymap.set(
     "n",
     "<localleader>o",
