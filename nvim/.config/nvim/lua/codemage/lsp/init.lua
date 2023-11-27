@@ -1,5 +1,6 @@
 local cmp = require("cmp")
 local capabalities = vim.lsp.protocol.make_client_capabilities()
+local luasnip = require("luasnip")
 
 capabalities = require("cmp_nvim_lsp").default_capabilities(capabalities)
 
@@ -7,15 +8,20 @@ local mason = require("mason")
 local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
 
+require("luasnip.loaders.from_vscode").lazy_load()
+luasnip.config.setup({})
+
 cmp.setup({
     snippet = {
         expand = function(args)
             require("luasnip").lsp_expand(args.body)
         end,
     },
+    completion = {
+        completeopt = "menu,menuone,noinsert",
+    },
     mapping = cmp.mapping.preset.insert({
         ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.abort(),
         ["<C-x>"] = cmp.mapping.close(),
         ["<C-y>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
@@ -28,15 +34,14 @@ cmp.setup({
     }),
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
-        { name = "lua_snip" },
+        { name = "luasnip" },
     }, {
         { name = "buffer" },
-        { name = "path" },
     }),
 })
 
-require("luasnip.loaders.from_vscode").load()
 
+-- return the way cmp should be formatted for the lsp
 local on_attach = function(client, bufnr)
     buffer = bufnr
     local map = vim.keymap.set
@@ -47,12 +52,12 @@ local on_attach = function(client, bufnr)
         "<cmd>lua vim.lsp.buf.definition()<CR>",
         { noremap = true, silent = true, desc = "Goto definition" }
     )
-    map(
-        "n",
-        "<C-k>",
-        "<Cmd>lua vim.lsp.buf.signature_help()<CR>",
-        { noremap = true, silent = true, desc = "Show Signature Help" }
-    )
+    map("n", "<C-k>", vim.lsp.buf.signature_help, {
+        noremap = true,
+        silent = true,
+        desc = "Show Signature Help",
+        buffer = 0,
+    })
     map(
         "n",
         "gD",
@@ -91,9 +96,9 @@ local on_attach = function(client, bufnr)
     )
     map(
         "n",
-        "<leader>K",
-        "<cmd>lua vim.lsp.buf.hover()<CR>",
-        { noremap = true, silent = true, desc = "Show Hover" }
+        "K",
+        vim.lsp.buf.hover,
+        { buffer = 0, noremap = true, silent = true, desc = "Show Hover" }
     )
     map(
         "n",
@@ -105,21 +110,9 @@ local on_attach = function(client, bufnr)
     -- Diagonistic Keymaps
     map(
         "n",
-        "<leader>nd",
-        "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
-        { noremap = true, silent = true, desc = "Goto Next Diagnostic" }
-    )
-    map(
-        "n",
-        "<leader>pd",
-        "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>",
-        { noremap = true, silent = true, desc = "Goto Previous Diagnostic" }
-    )
-    map(
-        "n",
         "<leader>dl",
-        "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",
-        { noremap = true, silent = true, desc = "Set Diagnostic Loclist" }
+        "<cmd>lua vim.diagnostic.open_float()<CR>",
+        { noremap = true, silent = false, desc = "Open Diagnostic Buffer" }
     )
     map(
         "n",
@@ -136,13 +129,13 @@ local on_attach = function(client, bufnr)
 end
 
 local servers = {
-    "clangd", -- C/C++
-    "gopls", -- Go
-    "pyright", -- Python
-    "lua_ls", -- Lua
+    "clangd",        -- C/C++
+    "gopls",         -- Go
+    "pyright",       -- Python
+    "lua_ls",        -- Lua
     "rust_analyzer", -- Rust
-    "tsserver", -- TypeScript
-    "dockerls", -- Docker
+    "tsserver",      -- TypeScript
+    "dockerls",      -- Docker
 }
 
 mason.setup()

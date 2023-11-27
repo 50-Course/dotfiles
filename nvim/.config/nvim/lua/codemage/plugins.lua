@@ -89,8 +89,14 @@ return require("packer").startup(function(use)
         },
     })
     -- friendly snippets for those vscode-like snippets
-    use({ "L3MON4D3/LuaSnip", tag = "v2.*" })
-    use({ "rafamadriz/friendly-snippets", after = { "nvim-cmp", "LuaSnip" } })
+    use({
+        "L3MON4D3/LuaSnip",
+        tag = "v2.*",
+        requires = {
+            "saadparwaiz1/cmp_luasnip",
+        },
+    })
+    use({ "rafamadriz/friendly-snippets" })
     use({
         "jose-elias-alvarez/null-ls.nvim",
         requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
