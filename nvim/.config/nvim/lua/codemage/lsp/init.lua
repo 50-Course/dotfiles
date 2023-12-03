@@ -73,13 +73,18 @@ local on_attach = function(client, bufnr)
         "n",
         "gD",
         "<cmd>lua vim.lsp.buf.declaration()<CR>",
-        { noremap = true, silent = true, desc = "Goto declaration" }
+        {
+            noremap = true,
+            silent = true,
+            desc = "Goto declaration",
+            buffer = 0,
+        }
     )
     map(
         "n",
         "gr",
         "<cmd>lua vim.lsp.buf.references()<CR>",
-        { noremap = true, silent = true, desc = "Goto references" }
+        { noremap = true, silent = true, buffer = 0, desc = "Goto references" }
     )
     map(
         { "n", "v" },
@@ -140,13 +145,13 @@ local on_attach = function(client, bufnr)
 end
 
 local servers = {
-    "clangd", -- C/C++
-    "gopls", -- Go
-    "pyright", -- Python
-    "lua_ls", -- Lua
+    "clangd",        -- C/C++
+    "gopls",         -- Go
+    "pyright",       -- Python
+    "lua_ls",        -- Lua
     "rust_analyzer", -- Rust
-    "tsserver", -- TypeScript
-    "dockerls", -- Docker
+    "tsserver",      -- TypeScript
+    "dockerls",      -- Docker
 }
 
 mason.setup()
