@@ -26,3 +26,15 @@ mdm() {
 log() {
     git log --oneline --graph main
 }
+
+# Better way to debug recursive system calls and laggy processes
+# Usage: strace -c -f -p <PID>
+# strace -c -f -p 1234
+# strace -c -f -p $(pgrep -f <process_name>)
+trace () {
+    if [[ -z $1 ]]; then
+        echo "Usage: trace <PID>"
+        return 1
+    fi
+    strace -c -f -p $1 2>&1 | grep -v "strace: Process $1 attached"
+}

@@ -40,7 +40,6 @@ cmp.setup({
     }),
 })
 
-
 -- return the way cmp should be formatted for the lsp
 local on_attach = function(client, bufnr)
     buffer = bufnr
@@ -117,7 +116,7 @@ local on_attach = function(client, bufnr)
     map(
         "n",
         "<leader>dc",
-        "<cmd>lua vim.lsp.diagnostic.clear(0)<CR>",
+        "<cmd>lua vim.lsp.diagnostic.clear()<CR>",
         { noremap = true, silent = true, desc = "Clear Diagnostics" }
     )
     map(
@@ -129,13 +128,13 @@ local on_attach = function(client, bufnr)
 end
 
 local servers = {
-    "clangd",        -- C/C++
-    "gopls",         -- Go
-    "pyright",       -- Python
-    "lua_ls",        -- Lua
+    "clangd", -- C/C++
+    "gopls", -- Go
+    "pyright", -- Python
+    "lua_ls", -- Lua
     "rust_analyzer", -- Rust
-    "tsserver",      -- TypeScript
-    "dockerls",      -- Docker
+    "tsserver", -- TypeScript
+    "dockerls", -- Docker
 }
 
 mason.setup()
