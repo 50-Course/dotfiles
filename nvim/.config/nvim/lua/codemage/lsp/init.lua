@@ -3,13 +3,11 @@ local capabalities = vim.lsp.protocol.make_client_capabilities()
 local luasnip = require("luasnip")
 
 capabalities = require("cmp_nvim_lsp").default_capabilities(capabalities)
+require("luasnip.loaders.from_vscode").lazy_load()
 
 local mason = require("mason")
 local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
-
-require("luasnip.loaders.from_vscode").lazy_load()
-luasnip.config.setup({})
 
 cmp.setup({
     snippet = {

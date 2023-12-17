@@ -24,6 +24,13 @@ local ensure_packer = function()
 end
 local packer_bootstrap = ensure_packer()
 
+config = {
+    profile = {
+        enable = true,
+        threshold = 1,
+    },
+}
+
 return require("packer").startup(function(use)
     use("wbthomason/packer.nvim")
 
@@ -99,7 +106,6 @@ return require("packer").startup(function(use)
     use({ "rafamadriz/friendly-snippets" })
     use({
         "jose-elias-alvarez/null-ls.nvim",
-        requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     })
 
     -- Java development
