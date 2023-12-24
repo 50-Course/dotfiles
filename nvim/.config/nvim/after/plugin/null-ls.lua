@@ -13,11 +13,9 @@ null_ls.setup({
         formatting.rustfmt,
         formatting.clang_format,
         formatting.stylua,
-        formatting.isort,
         formatting.black.with({ extra_args = { "--fast" } }),
         formatting.shfmt,
         diagnostics.flake8,
-        diagnostics.mypy,
     },
 })
 

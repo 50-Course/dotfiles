@@ -1,11 +1,9 @@
 require("nvim-treesitter.configs").setup({
     ensure_installed = {
-        "bash",
         "c",
         "css",
         "dockerfile",
         "go",
-        "gomod",
         "html",
         "java",
         "javascript",
@@ -14,7 +12,6 @@ require("nvim-treesitter.configs").setup({
         "python",
         "rust",
         "toml",
-        "tsx",
         "typescript",
         "vim",
         "yaml",

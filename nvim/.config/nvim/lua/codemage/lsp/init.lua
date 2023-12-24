@@ -105,24 +105,10 @@ local on_attach = function(client, bufnr)
     )
 
     -- Diagonistic Keymaps
-    map(
-        "n",
-        "<leader>dl",
-        "<cmd>lua vim.diagnostic.open_float()<CR>",
-        { noremap = true, silent = false, desc = "Open Diagnostic Buffer" }
-    )
-    map(
-        "n",
-        "<leader>dc",
-        "<cmd>lua vim.lsp.diagnostic.clear()<CR>",
-        { noremap = true, silent = true, desc = "Clear Diagnostics" }
-    )
-    map(
-        "n",
-        "<leader>da",
-        "<cmd>lua vim.lsp.diagnostic.code_action()<CR>",
-        { noremap = true, silent = true, desc = "Code Action" }
-    )
+    vim.keymap.set("n", "<leader>dl", vim.diagnostic.open_float)
+    vim.keymap.set("n", "<leader>pd", vim.diagnostic.goto_prev)
+    vim.keymap.set("n", "<leader>nd", vim.diagnostic.goto_next)
+    vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 end
 
 local servers = {
