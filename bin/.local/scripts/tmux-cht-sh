@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+path=~/.dotfiles/bin/.local/cht.sh/
+selected=`cat $path/.cht-languages $path/.cht-commands | fzf` 
+
+# do nothing if no selection 
+if [[ $selected == "" ]]; then
+    exit 0
+fi
+
+read 'Enter query: ' query
+
+# Open in new window if language is selected
+if grep -q $selected $path/.cht-languages; then
+    query=`echo $query | tr ' ' '+'`
+
+    tmux neww bash -c "echo \curl cht.sh/$selected/$query/\" & curl -s cht.sh/$selected/$query/ & while [ : ]; do sleep 1; done"
+else
+    tmux neww bash -c "curl -s cht.sh/$selected~$query | less"
+fi
