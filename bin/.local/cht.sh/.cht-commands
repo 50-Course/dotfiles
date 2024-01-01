@@ -5,4 +5,5 @@ tr
 awk
 sed
 strace
+lsof
 

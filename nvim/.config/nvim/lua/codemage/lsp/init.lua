@@ -1,6 +1,5 @@
 local cmp = require("cmp")
 local capabalities = vim.lsp.protocol.make_client_capabilities()
-local luasnip = require("luasnip")
 
 capabalities = require("cmp_nvim_lsp").default_capabilities(capabalities)
 require("luasnip.loaders.from_vscode").lazy_load()
@@ -15,9 +14,9 @@ cmp.setup({
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    completion = {
-        completeopt = "menu,menuone,noinsert",
-    },
+    -- completion = {
+    --     completeopt = "menu,menuone,noinsert",
+    -- },
     mapping = cmp.mapping.preset.insert({
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-x>"] = cmp.mapping.close(),

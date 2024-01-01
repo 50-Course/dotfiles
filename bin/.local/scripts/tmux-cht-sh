@@ -11,10 +11,10 @@ fi
 read 'Enter query: ' query
 
 # Open in new window if language is selected
-if grep -q $selected $path/.cht-languages; then
+if grep -qs '$selected' $path/.cht-languages; then
     query=`echo $query | tr ' ' '+'`
 
-    tmux neww bash -c "echo \curl cht.sh/$selected/$query/\" & curl -s cht.sh/$selected/$query/ & while [ : ]; do sleep 1; done"
+    tmux neww bash -c "echo \"curl cht.sh/$selected/$query/\" & curl cht.sh/$selected/$query & while [ : ]; do sleep 1; done"
 else
-    tmux neww bash -c "curl -s cht.sh/$selected~$query | less"
+    tmux neww bash -c "cht.sh/$selected~$query | less"
 fi

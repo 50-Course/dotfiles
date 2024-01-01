@@ -56,7 +56,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- ********************************************************
-
 vim.g["test#strategy"] = "neovim"
 vim.g["test#neovim#term_repl_open_cmd"] = "vsplit"
 vim.g["test#neovim#term_position"] = "vert"

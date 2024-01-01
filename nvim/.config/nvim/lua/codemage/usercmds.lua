@@ -5,3 +5,11 @@
 -- This file is loaded by init.lua
 
 -- auto-format on save
+
+local autocmd = vim.api.nvim_create_autocmd
+local M = {}
+
+--- Use makeprg to run files based on file types
+---
+
+return M

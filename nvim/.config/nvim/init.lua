@@ -16,6 +16,8 @@ end
 
 -- TODO: move this into the settings file
 vim.g.netrw_banner = 0 -- Disable netrw banner (annoying)
+vim.g.loaded_python3_provider = 0
+
 require("codemage.settings")
 require("codemage.plugins")
 require("codemage.keymaps")
