@@ -1,5 +1,6 @@
 # commands and functions for personal optimal productivty
 
+alias v='nvim'
 alias gw='git worktree '
 alias gwa='git worktree add'
 alias gb='git branch -a'
