@@ -72,6 +72,11 @@ if has('ide')
     map <leader>b <Action>(Switcher)
 endif
 
+" I just can shake the fillig of using vim in vscode sometimes
+if has('code')
+
+endif
+
 " -----------------------------------------------------
 " PLUGINS ----------------------------------------- {{{
 
