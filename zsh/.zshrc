@@ -159,3 +159,6 @@ export PATH="$HOME/.poetry/bin:$PATH"
 . "$HOME/.cargo/env"
 # Python
 eval "$(pyenv virtualenv-init -)"
+
+# SpringBoot Completion
+. ~/.sdkman/candidates/springboot/current/shell-completion/bash/spring
