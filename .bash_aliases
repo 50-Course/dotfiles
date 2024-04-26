@@ -3,6 +3,7 @@
 alias v='nvim'
 alias gw='git worktree '
 alias gwa='git worktree add'
+alias gwr='git worktree remove'
 alias gb='git branch -a'
 alias gc='git clone'
 alias gco='git checkout'
@@ -15,11 +16,14 @@ alias gst='git status'
 alias g='git'
 alias d='docker'
 alias dc='docker compose'
+alias j='java'
 
 # change directory into my dotfiles directory at the speed of light
 alias dots='cd ~/.dotfiles'
 
 
+# make new directory for me
+# doesn't  matter if the subdirectory exists or not
 mdm() {
     if [[ ! -z $1 ]]; then
         mkdir -p $1 && cd $1
