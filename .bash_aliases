@@ -17,6 +17,11 @@ alias g='git'
 alias d='docker'
 alias dc='docker compose'
 alias j='java'
+alias handees="cd ~/forks/handees/mobile"
+alias gpr='git pull --rebase'
+alias unyte='cd ~/work/unyte/'
+alias uwema='cd ~/work/unyte/Unyte-Alat/'
+alias uv2='cd ~/work/unyte/Unyte-V2/'
 
 # change directory into my dotfiles directory at the speed of light
 alias dots='cd ~/.dotfiles'
