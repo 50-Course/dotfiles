@@ -88,71 +88,7 @@ zstyle ':omz:update' mode disabled  # disable automatic updates
 ####################
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# these lazily load nvm before your node commands
-nvm_lazy_load() {
-    unset -f nvm node npm npx
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-    load-nvmrc
-}
-nvm() {
-    nvm_lazy_load
-    nvm $@
-}
-node() {
-    nvm_lazy_load
-    node $@
-}
-npm() {
-    nvm_lazy_load
-    npm $@
-}
-npx() {
-    nvm_lazy_load
-    npx $@
-}
-
-autoload -U add-zsh-hook
-
-# this loads nvmrc when a file exists, and finds the path of the nvmrc file itself
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path=""
-  local dir="$PWD"
-
-  # Look for .nvmrc file in current directory and parent directories
-  while [[ "$dir" != "" && ! -e "$dir/.nvmrc" ]]; do
-    dir="${dir%/*}"
-  done
-
-  # If .nvmrc file was found, set nvmrc_path
-  if [[ -e "$dir/.nvmrc" ]]; then
-    nvmrc_path="$dir/.nvmrc"
-  fi
-
-  if [ -n "$nvmrc_path" ]; then
-    echo "Found $nvmrc_path, switching to node $(cat "${nvmrc_path}")"
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-
-# this is ran on every directory, and checks if an nvmrc file exists (parent or child) first
-trigger-nvm() {
-  if [[ -n $(find . -maxdepth 2 -name '*.nvmrc' -type f -print -quit) || -f ../.nvmrc || -f ../../.nvmrc || -f ../../../.nvmrc ]]; then 
-    nvm_lazy_load
-    load-nvmrc
-  fi
-}
+source lazy-nvm.sh
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -211,7 +147,7 @@ export GRADLE_USER_HOME=$GRADLE_HOME
 export PATH=$PATH:/usr/local/go/bin
 
 # My local scripts folder
-PATH="$PATH":"$HOME/.local/scripts/"
+export PATH="$PATH":"$HOME/.local/scripts/"
 
 alias vi='nvim'
 
@@ -279,6 +215,3 @@ DOCKER_BUILDKIT=1
 
 # Pub Cache
 export PATH="$PATH":"$HOME/.pub-cache/bin"
-
-# Custo hooks
-add-zsh-hook chpwd trigger-nvm
