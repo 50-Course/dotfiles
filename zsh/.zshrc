@@ -88,7 +88,7 @@ zstyle ':omz:update' mode disabled  # disable automatic updates
 ####################
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-source lazy-nvm.sh
+source ~/lazy-nvm.sh
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
