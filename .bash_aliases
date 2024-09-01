@@ -22,7 +22,7 @@ alias gpr='git pull --rebase'
 alias unyte='cd ~/work/unyte/'
 alias uwema='cd ~/work/unyte/Unyte-Alat/'
 alias uv2='cd ~/work/unyte/Unyte-V2/'
-alias superpool='cd ~/work/unyte/Superpool'
+alias superpool='cd ~/work/unyte/superpool-nightly/'
 alias uarch='cd ~/work/unyte/arch/'
 
 # change directory into my dotfiles directory at the speed of light

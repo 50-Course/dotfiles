@@ -21,7 +21,14 @@ set incsearch
 set splitbelow
 set noswapfile
 set clipboard=unnamedplus
+set laststatus=2
+set ruler
+set nobackup
+set nowritebackup
+set hidden
 
+
+let g:coc_disable_startup_warning = 1
 " Set tab with to 4 columns
 set tabstop=4 softtabstop=4
 
@@ -53,14 +60,6 @@ set wildmode=list:longest
 " Ignore these files in autocomplete
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,**/node_modules
 
-
-
-" Others
-map mapleader <Space>
-
-" Open file explorer with simple command
-nnoremap <leader>pv :Vex<CR>
-
 if has('ide')
     " global settings
     set ideamarks
@@ -83,16 +82,10 @@ endif
 call plug#begin('~/.vim/plugged')
 
 
-
+    Plug 'christoomey/vim-tmux-navigator'
     Plug 'dense-analysis/ale'
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'williamboman/mason.nvim'
-    Plug 'williamboman/mason-lspconfig.nvim'
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'L3MON4D3/LuaSnip'
-    Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v3.x'}
     Plug 'preservim/nerdtree'
+    Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
 
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -102,6 +95,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}  
     Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}  
     Plug 'davidhalter/jedi-vim'
+    Plug 'vim-test/vim-test'
 
 call plug#end()
 
@@ -110,13 +104,31 @@ runtime coc-init.vim
 " }}}
 
 " MAPPINGS ---------------------------------------- {{{
-
 " Mappings
+
+nnoremap <Space> <Nop>
+let mapleader=" "
 inoremap jj <esc>
 inoremap jk <esc>
 vnoremap jk <esc>
 xnoremap jk <esc>
 inoremap <esc> <nop>
+nnoremap <silent><C-f> <Cmd>!tmux neww tmux-sess-man<CR>
+nmap <Leader><Leader> <Cmd>source %<CR>
+nmap <silent><Leader>x <Cmd>!chmod +x %<CR>
+nmap <Leader>pv <Cmd>Vex<CR>
+nmap <leader>f :Rg<CR>
+nnoremap <C-c> <Cmd>q<CR>
+nnoremap <Leader>cb <Cmd>q!<CR>
+nnoremap <Leader>w <Cmd>w<CR>
+
+" Use system clipboards instead of Vim's built-in clipboard
+ nnoremap <Leader>y "+Y
+ vnoremap <Leader>y "+Y
+ nnoremap <Leader>d "_d
+ vnoremap <Leader>d "_d
+ nnoremap <Leader>p "+P
+
 
 
 " }}}
