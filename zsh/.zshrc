@@ -227,7 +227,6 @@ GOBINPATH=$HOME/go/bin
 export PATH=$PATH:$GOBINPATH
 
 # Jira
-export JIRA_API_TOKEN=ATATT3xFfGF0yaqh-Mzgh7KlSJAhrT9sKGoRLVl09a7HbepJH4k0II4ftYplr9GRoqPlVxDY-gbwhNUypsBKug4bqOGRQ7ZqviJpo9fXcsUUgx-cOoBLle9ekkLK6UnTPMO4b02cmEFpvMDaa9eYuSY1wja3Iib8YCipanu5pmMK76CGPXVYQ54=14FD4D24
 
 # pnpm
 export PNPM_HOME="/home/erioluwa/.local/share/pnpm"
