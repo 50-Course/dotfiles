@@ -1,5 +1,8 @@
 # commands and functions for personal optimal productivty
 
+# alias flutter="fvm flutter"
+# alias dart="fvm dart"
+alias spacelink='./vpn/vpn.sh'
 alias v='nvim'
 alias gw='git worktree '
 alias gwa='git worktree add'
@@ -11,23 +14,23 @@ alias gcm='git commit -m'
 alias ga='git add'
 alias gaA='git add -A'
 alias gp='git push'
+alias qc='cd ~/konohagakure/qccore/'
 alias gpl='git pull --depth 1'
 alias gst='git status'
 alias g='git'
 alias d='docker'
 alias dc='docker compose'
 alias j='java'
+alias gcca='gcloud config configurations activate'
 alias handees="cd ~/forks/handees/mobile"
 alias gpr='git pull --rebase'
-alias unyte='cd ~/work/unyte/'
-alias uwema='cd ~/work/unyte/Unyte-Alat/'
-alias uv2='cd ~/work/unyte/Unyte-V2/'
-alias superpool='cd ~/work/unyte/superpool-nightly/'
-alias uarch='cd ~/work/unyte/arch/'
-alias udashboard='cd ~/work/unyte/superpool-dashboard/'
-alias rs='python manage.py runserver'
+alias runserver='python manage.py runserver'
+alias rplus='python manage.py runserver_plus'
 alias migrate='python manage.py migrate'
 alias makemigrations='python manage.py makemigrations'
+alias wamiri="cd ~/projects/akatsuki/wamiri/"
+alias wamiriweb="cd ~/projects/akatsuki/wamiri/Alkebulan/"
+alias wamiribackend="cd ~/projects/akatsuki/wamiri/alkebulan-backend/"
 
 # change directory into my dotfiles directory at the speed of light
 alias dots='cd ~/.dotfiles'
