@@ -1,61 +1,35 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-SEARCH_ROOTS=(
-	"$HOME/projects"
-	"$HOME/dev"
-	"$HOME/personal"
-	"$HOME/.dotfiles"
-	"$HOME/.config"
-	"$HOME/forks"
-	"$HOME/konohagakure"
-)
-
-IGNORE_DIRS=(
-	"node_modules"
-	".git"
-	".venv"
-	"__pycache__"
-)
-
-# only keep existing roots
-roots=()
-for r in "${SEARCH_ROOTS[@]}"; do
-	[[ -d "$r" ]] && roots+=("$r")
-done
+IGNORE_DIRS=(.ruff_cache node_modules .git .venv __pycache__ .terraform .idea .vscode .gradle .mvn target build dist .mypy_cache .pytest_cache .cache __pypackages__ .tox)
 
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	# selected=$(find ~/projects ~/konohagakure ~/dev ~/personal ~/.config ~/forks -mindepth 2 -maxdepth 4 -type d | fzf)
+	# build prune expressions
+	PRUNE_EXPR=""
+	for d in "${IGNORE_DIRS[@]}"; do
+		PRUNE_EXPR+=" -path */$d -prune -o"
+	done
+
 	selected=$(
-		find "${roots[@]}" \
-			-mindepth 1 -maxdepth 4 -type d \
-			$(printf "! -path '*/%s/*' " "${IGNORE_DIRS[@]}") \
-			2>/dev/null | fzf
+		find ~/projects ~/dev ~/personal ~/.dotfiles ~/.config ~/forks ~/konohagakure \
+			-mindepth 1 -maxdepth 4 $PRUNE_EXPR -type d -print 2>/dev/null | fzf
 	)
 fi
 
-# nothing is chosen?
-if [[ -z $selected ]]; then
-	exit 0
-fi
+# nothing selected
+[[ -z "$selected" ]] && exit 0
 
 selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 
-if [[ -z ${TMUX:-} ]] && [[ -z $tmux_running ]]; then
-	tmux new-session -s $selected_name -c $selected
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+	tmux new-session -s "$selected_name" -c "$selected"
 	exit 0
 fi
 
-if ! tmux has-session -t=$selected_name 2>/dev/null; then
-	tmux new-session -ds $selected_name -c $selected
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+	tmux new-session -ds "$selected_name" -c "$selected"
 fi
 
-if [[ -z ${TMUX:-} ]]; then
-	tmux attach -t $selected_name
-else
-	tmux switch-client -t $selected_name
-fi
+tmux switch-client -t "$selected_name"
