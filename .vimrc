@@ -85,8 +85,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'dense-analysis/ale'
     Plug 'preservim/nerdtree'
-    Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
-
     Plug 'sheerun/vim-polyglot'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
