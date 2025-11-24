@@ -1,0 +1,66 @@
+# my playbook conffiguration for distro hoping and VM usage
+#
+# neovim, tree, emacs, nano, zsh, bash, tmux, htop, neofetch, git, curl, wget
+# sets zsh as default shell
+- name: Setup Personal Development Environment
+  hosts: all
+  become: yes
+
+  vars:
+    packages:
+      - neovim
+      - tree
+      - emacs
+      - nano
+      - zsh
+      - bash
+      - tmux
+      - htop
+      - neofetch
+      - git
+      - curl
+      - wget
+      - stow
+
+  tasks:
+    - name: Update package index
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install packages on Debian-based systems
+      apt:
+        name: "{{ packages }}"
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install packages on RedHat-based systems
+      yum:
+        name: "{{ packages }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Install packages on Arch-based systems
+      pacman:
+        name: "{{ packages }}"
+        state: present
+      when: ansible_os_family == "Archlinux"
+
+    - name: Install packages on Alpine-based systems
+      apk:
+        name: "{{ packages }}"
+        state: present
+      when: ansible_os_family == "Alpine"
+
+    - name: If OS is Mac, install packages using Homebrew
+      homebrew:
+        name: "{{ packages }}"
+        state: present
+      when: ansible_os_family == "Darwin"
+
+    - name: Change default shell to zsh for current user
+      user:
+        name: "{{ ansible_user }}"
+        shell: /usr/bin/zsh
+
+    # - name: Pull my dotfiles from GitHub and set up symlinks using Stow
