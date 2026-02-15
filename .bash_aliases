@@ -4,26 +4,49 @@
 # alias dart="fvm dart"
 alias spacelink='$HOME/vpn/vpn.sh'
 alias v='nvim'
+
+# git
 alias gw='git worktree '
 alias gwa='git worktree add'
 alias gwr='git worktree remove'
 alias gb='git branch'
+alias gba='git branch -a'
 alias gc='git clone'
 alias gco='git checkout'
 alias gcm='git commit -m'
 alias ga='git add'
 alias gaA='git add -A'
-alias gp='git push'
+alias gp='git push origin HEAD'
 alias qc='cd ~/konohagakure/qccore/'
 alias gpl='git pull --depth 1'
 alias gst='git status'
 alias g='git'
+alias gpr='git pull --rebase'
+alias glog="git log --graph --topo-order --pretty=format:'%C(auto)%h%d %s %C(blue)<%an>%Creset' --abrev-commit --date=relative"
+
+
+# docker
 alias d='docker'
+alias dps='docker ps'
+alias dpa='docker ps -a'
+alias dl='docker ps -l -q'
 alias dc='docker compose'
+alias dcb='docker compose build'
+alias dcu='docker compose up'
+alias dcd='docker compose down'
+alias dcl='docker compose logs -f'
+alias dx='docker exec -it'
+
+
+# directories
+alias ....='cd ../../..'
+alias ...='cd ../..'
+
+
+# extras
 alias j='java'
 alias gcca='gcloud config configurations activate'
 alias handees="cd ~/forks/handees/mobile"
-alias gpr='git pull --rebase'
 alias runserver='python manage.py runserver'
 alias rplus='python manage.py runserver_plus'
 alias migrate='python manage.py migrate'
