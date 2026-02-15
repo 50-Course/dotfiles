@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+IGNORE_DIRS=(.ruff_cache node_modules .git .venv __pycache__ .terraform .idea .vscode .gradle .mvn target build dist .mypy_cache .pytest_cache .cache __pypackages__ .tox)
+
+if [[ $# -eq 1 ]]; then
+	selected=$1
+else
+	# build prune expression as an array
+	PRUNE_EXPR=()
+	PRUNE_EXPR+=("(")
+
+	for d in "${IGNORE_DIRS[@]}"; do
+		PRUNE_EXPR+=(-path "*/$d" -o)
+	done
+
+	# remove the last -o
+	unset 'PRUNE_EXPR[-1]'
+	PRUNE_EXPR+=(")" -prune -o)
+
+	selected=$(
+		find ~/projects ~/dev ~/personal ~/.dotfiles ~/.config ~/forks ~/konohagakure \
+			-mindepth 1 -maxdepth 4 "${PRUNE_EXPR[@]}" -type d -print 2>/dev/null | fzf
+	)
+fi
+
+# if nothing is selected, drop out
+[[ -z "$selected" ]] && exit 0
+
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+	tmux new-session -s "$selected_name" -c "$selected"
+	exit 0
+fi
+
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+	tmux new-session -ds "$selected_name" -c "$selected"
+fi
+
+tmux switch-client -t "$selected_name"

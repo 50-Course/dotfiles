@@ -1,0 +1,242 @@
+-- This configuration file is licensed under the MIT License
+-- The user (You) is permitted to modfiy, use or re-distribute the configuration
+-- file as he/she/they/them/other see pleased.
+--
+-- It would be nice, if you could mention the author. Thanks!
+
+
+-- Global configuration
+--
+-- :h <options> would give you the options
+--
+-- Leader key to spacebar and local leader just allow me play the melodies the way i want it
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ','
+-- Don't close buffers on switching to another, keep them in memory instead
+vim.o.hidden = false
+vim.o.hlsearch = false
+-- Give some numbering vibes
+vim.wo.number = true
+vim.wo.relativenumber = true
+-- Be smart about our search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+-- Fat cursor is everything, what can I say? We pimp dhem holes ^_^
+vim.opt.guicursor = ''
+-- Yaay indenting!
+-- Vim be smart about my indenting
+vim.opt.smartindent = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+-- Reduce Vim's update time
+vim.opt.updatetime = 50
+-- No fuckin' way would I tolerate text-wrapped
+vim.opt.wrap = false
+-- Talmabout good completion experience
+vim.opt.completeopt = 'menuone,noselect,preview'
+
+-- Set the number of reserved lines at the top and bottom before scrolling starts
+vim.wo.scrolloff = 8
+vim.wo.sidescrolloff = 8
+
+-- Colorscheme - Themes
+--
+-- TODO: Get `Tokyonight theme` theme
+
+-- vim.cmd.colorscheme('slate')
+-- Keymaps-eh!
+--
+-- Keymaps allows me to perform alchemy of old arts. Magic of the piano.
+
+-- Unbind default behaviour of spacebar to vim commands
+local keymap = vim.keymap
+
+-- A better way to save
+keymap.set('n', '<leader>w', '<cmd>w<cr>', {silent = true})
+-- Quickly quit Vim
+keymap.set('n', '<leader>q', '<cmd>wq<cr>', {silent = true})
+-- Quickly jump back to Normal mode
+keymap.set({'n', 'v', 'i'}, 'jk', '<esc>', {silent = true})
+-- Quick lauch of Netrw
+keymap.set('n', '<leader>pv', vim.cmd.Ex, {desc = 'View Project Explorer', silent=true})
+-- Move lines up or down
+keymap.set('v', 'J', ":m '>+1<cr>gv=gv")
+keymap.set('v', 'K', ":m '<-2<cr>gv=gv")
+-- Launch a bash immidiately
+keymap.set('n', '<leader>x', '<cmd>!chmod u+x %<cr>', {desc='Make script executable', silent=true})
+-- Resource Vim like true Vim chad
+--
+-- Little optimization to save me when working with Vim config
+keymap.set('n', '<localleader><localleader>r', ':source %<cr>', {desc = 'Reload neovim'})
+
+
+
+-- Give me that bleep!
+--
+-- Highlight on cursor, when yanking
+local highlight_text = vim.api.nvim_create_augroup('YankMeDaddy', {clear=true})
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = highlight_text,
+    callback = function() vim.highlight.on_yank() end,
+    pattern = '*',
+})
+
+-- Packer is a good package manager for true philosphical chads out...
+-- Millinieal would never understand ;)
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+
+local plugins = function(use)
+	use 'wbthomason/packer.nvim'
+
+    -- Better interface to work with Vim/NeoVim APIs
+    -- Also allows for job processing and execution
+    use 'nvim-lua/plenary.nvim'
+
+    -- Everything LSP
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v3.x',
+        requires = {
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},
+
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},
+            -- Autocompletion
+            {'hrsh7th/nvim-cmp'},
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'L3MON4D3/LuaSnip'},
+        }
+    }
+
+    -- Treesitter
+    use ('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+    -- Comments are such a nice things to have
+	--
+	-- Comments.nvim won my heart
+	-- to use built-in comments support, you have to use the 
+	-- :h commentstring
+	use {
+		'numToStr/Comment.nvim',
+		config = function()
+			require('Comment').setup()
+		end
+	}
+
+	-- Nobody told you about Vim Wakatime?
+	use 'wakatime/vim-wakatime'
+    
+use 'lewis6991/impatient.nvim'
+    -- Greatest marks-accessor ever
+    --
+    -- by the degenerate saiour, Primeagen
+    use 'ThePrimeagen/harpoon'
+    -- Greatest formatter of all time
+    --
+    -- P.s: This is already being archived, but we all sch r?
+    use 'jose-elias-alvarez/null-ls.nvim'
+end
+
+
+-- [[ Plugins configuration ]] --
+--
+-- We want all the keybinds, configurations and what nots in this section
+--
+-- For default keymaps see the above
+--
+-- We load our plugins with the `leader` key
+keymap.set('n', '<localleader>h', ':lua require("harpoon.ui").toggle_quick_menu()<cr>')
+keymap.set('n', '<localleader>a', ':lua require("harpoon.mark").add_file()<cr><cr>')
+
+keymap.set('n', '<leader>1', ':lua require("harpoon.ui").nav_file(1)<cr>')
+keymap.set('n', '<leader>2', ':lua require("harpoon.ui").nav_file(2)<cr>')
+keymap.set('n', '<leader>3', ':lua require("harpoon.ui").nav_file(3)<cr>')
+keymap.set('n', '<leader>4', ':lua require("harpoon.ui").nav_file(4)<cr>')
+
+
+
+-- [[ LSP, Treesitter and Other configs ]]
+--
+local lsp_zero = require('lsp-zero')
+
+local on_attach = function(client, buff)
+
+  -- Includes description to n-keymaps
+  local nmap = function(keys, func, desc)
+      if desc then desc = "Lsp: "..desc end
+
+      keymap.set('n', keys, func, {desc=desc, buffer = buff})
+  end
+  nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+  nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+
+  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+  nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+  nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
+  -- See `:help K` for why this keymap
+  nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+  nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+
+  -- Lesser used LSP functionality
+  nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+end
+
+lsp_zero.on_attach(on_attach)
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {},
+  handlers = {
+    lsp_zero.default_setup,
+  },
+})
+
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {"java", "c", "lua", "javascript", "typescript", "go", "python", "rust", "htmldjango"},
+
+  sync_install = false,
+
+  auto_install = true,
+
+  highlight = {
+    enable = true,
+
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+local null_ls = require("null-ls")
+
+-- NullLS can be used for multiple things; code completio, formatting, diagonistics, linting
+--
+-- I am only focusing on diagonistics and formatting
+-- I would actually prefer inlay hints
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
+
+null_ls.setup({
+    sources = {
+        formatting.stylua,
+        formatting.ruff,
+    },
+})
+
+
+-- Always stay at the end of the line
+return require('packer').startup(plugins)

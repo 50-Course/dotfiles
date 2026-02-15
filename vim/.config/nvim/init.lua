@@ -1,0 +1,437 @@
+------------------------------------------
+--- PERSONAL DEVELOPMENT ENVIRONMENT
+---
+--- 2024 is the year of efficiency and winnings - I can feel it! - Jan 7, 24
+--- Author: Eri (@50Course/@codemage)
+--- License: MIT License
+------------------------------------------
+
+-- ******************************** SPEED UP LOAD TIME ********************************
+vim.loader.enable()
+
+--- Disable VIM defaults
+-- Nobody likes the top banner on NetRW -- I don't!
+local disabled_providers = {
+    "gzip",
+    "node_provider",
+    "perl_provider",
+    "ruby_provider",
+    "python_provider",
+}
+
+for _, provider in ipairs(disabled_providers) do
+    vim.g["loaded_" .. provider] = 0
+end
+
+vim.g.netrw_banner = 0
+vim.g.netrw_browse_split = 0
+--vim.g.loaded_python3_provider = 0 -- enable python 3 provider
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = ";"
+-- vim.g.rg_command = "rg --vimgrep -S"
+
+-- I am using Packer as my plugin manager
+--
+-- This is only possible because `install.sh` is bootsrapping my Vim
+-- distro with packer installation
+-- vim.cmd([[packadd packer.nvim ]])
+
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath("data")
+        .. "/site/pack/packer/start/packer.nvim"
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({
+            "git",
+            "clone",
+            "--depth",
+            "1",
+            "https://github.com/wbthomason/packer.nvim",
+            install_path,
+        })
+        vim.cmd([[packadd packer.nvim]])
+        return true
+    end
+    return false
+end
+
+local bootstrap_packer = ensure_packer()
+
+-- ======================== PLUGINS MANAGEMENT ========================
+require("packer").startup(function(use)
+    -- Packer-in-Packer (PIP) to manage itself
+    --
+    -- This option allows to manage version updates
+    -- for the packer plugin itself
+    use({ "wbthomason/packer.nvim" })
+
+    -- Pass me the harpoon for swift buffer navigation
+    use("ThePrimeagen/harpoon")
+
+    -- Refactoring
+    use({ "ThePrimeagen/refactoring.nvim" })
+
+    -- Git Worktrees - I simply love them i use them on the terminal a lot
+    use("ThePrimeagen/git-worktree.nvim", {
+        config = function()
+            require("codemage.worktrees")
+        end,
+    })
+
+    -- Treesitter
+    use({
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        run = ":TSUpdate",
+        config = function()
+            require("codemage.treesitter")
+        end,
+    })
+
+    -- New rewrite of Treesitter API made this obsolte
+    -- use({
+    --     "nvim-treesitter/nvim-treesitter-textobjects",
+    --     branch = "main",
+    --     -- only load after treesitter
+    --     requires = { "nvim-treesitter/nvim-treesitter" },
+    --     after = "nvim-treesitter",
+    -- })
+
+    use({
+        "lewis6991/gitsigns.nvim",
+        requires = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("gitsigns").setup()
+        end,
+    })
+
+    -- Fugitive for Git-integration
+    --
+    -- Run: `:h fugitive` to get started
+    use("tpope/vim-fugitive")
+
+    -- Extend plugin capabilities by providing
+    -- high-level apis to extend vim native apis
+    use("nvim-lua/plenary.nvim")
+
+    -- Comment.nvim
+    -- Comments are just awesome
+    use({
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup()
+        end,
+    })
+
+    -- GitHub Co-pilot
+    --
+    -- So i finally found a way to disable this stuff - setting `opt` to true lol
+    use({ "github/copilot.vim", opt = false })
+
+    -- Glow for markdown preview
+    use({
+        "ellisonleao/glow.nvim",
+        cmd = "Glow",
+        ft = "markdown",
+        config = function()
+            require("glow").setup()
+        end,
+    })
+
+    --- LSP Config
+    --- Langugue server management
+    use({ "williamboman/mason.nvim", tag = "v1.*" })
+    use({ "williamboman/mason-lspconfig.nvim", tag = "v1.*" })
+
+    -- LSP Support
+    use({ "neovim/nvim-lspconfig" })
+    -- Autocompletion
+    use({
+        "hrsh7th/nvim-cmp",
+        requires = {
+            "hrsh7th/cmp-nvim-lsp",
+            "saadparwaiz1/cmp_luasnip",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-nvim-lua",
+        },
+    })
+
+    -- Diagramming
+    use({ "jbyuki/venn.nvim" }) -- ascii diagramming
+    -- use("zhaozg/vim-diagram")   -- mermaid diagrams
+    use("3rd/diagram.nvim") -- mermaid diagrams (beter perf)
+
+    -- Image support
+    use("3rd/image.nvim")
+
+    -- Debugger Support
+    use({
+        "mfussenegger/nvim-dap",
+        config = function()
+            require("codemage.dap")
+        end,
+    })
+
+    -- configure DAP via mason
+    use({
+        "jay-babu/mason-nvim-dap.nvim",
+        requires = { "williamboman/mason.nvim", "mfussenegger/nvim-dap" },
+        opts = {},
+    })
+
+    use({
+        "rcarriga/nvim-dap-ui",
+        requires = { "nvim-neotest/nvim-nio" },
+    })
+
+    use("theHamsta/nvim-dap-virtual-text")
+
+    -- Terminal manager with Toggleterm
+    -- https://github.com/akinsho/toggleterm.nvim.git
+    use({
+        "akinsho/toggleterm.nvim",
+        tag = "*",
+        config = function()
+            require("codemage.toggleterm")
+        end,
+    })
+
+    -- Flutter
+    -- Lsp integraton
+    -- https://github.ocm/akinsho/flutter-tools.nvim
+    use({
+        "nvim-flutter/flutter-tools.nvim",
+        opt = true,
+        config = function()
+            require("codemage.dart")
+        end,
+    })
+
+    -- Snippets
+    use({
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!:).
+        run = "make install_jsregexp",
+    })
+
+    use(
+        "rafamadriz/friendly-snippets",
+        -- only load after LuaSnip
+        { after = "L3MON4D3/LuaSnip" }
+    )
+
+    -- Java LSP
+    --
+    -- For configuration, see: https://github.com/mfussenegger/nvim-jdtls
+    -- use("mfussenegger/nvim-jdtls")
+
+    -- Nvim Java
+    --
+    -- An all-in-one ready java plugin manager for vim
+    -- https://github.com/nvim-java/nvim-java
+    use({
+        "nvim-java/nvim-java",
+        requires = {
+            "nvim-java/nvim-java-refactor",
+            "nvim-java/nvim-java-core",
+            "nvim-java/nvim-java-test",
+            "nvim-java/nvim-java-dap",
+            "MunifTanjim/nui.nvim",
+            "nvim-java/lua-async-await",
+            "JavaHello/spring-boot.nvim",
+        },
+        -- only load when java files are open
+        -- ft = { "java" },
+    })
+    --
+    -- SpringBoot nvim
+    --
+    -- https://github.com/JavaHello/spring-boot.nvim
+    -- use({
+    --     "JavaHello/spring-boot.nvim",
+    --     config = function()
+    --         require("spring_boot").setup({})
+    --     end,
+    -- })
+
+    -- Test integration with Vim Test
+    --
+    -- The plugin allows granular control over how vim interacts
+    -- with test suites and how tests are run.
+    use({
+        "vim-test/vim-test",
+        cmd = {
+            "TestFile",
+            "TestNearest",
+            "TestLast",
+            "TestSuite",
+            "TestVisit",
+        },
+    })
+
+    use({
+        "klen/nvim-test",
+        requires = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+    })
+
+    -- Fuzzy-matching with Telesecope
+    --
+    -- File explorer sucks, just fuzzy bro@
+    use({ "nvim-telescope/telescope.nvim", tag = "0.1.5" })
+    use(
+        "nvim-telescope/telescope-fzf-native.nvim",
+        { run = "make", after = "nvim-telescope/telescope.nvim" }
+    )
+
+    -- UndoTree
+    --
+    -- Persist undos and redos in VCS format using algorithm similar to git trees
+    use("mbbill/undotree")
+
+    -- Themes (Tokyonight or Rose-pine)
+    use({ "rose-pine/neovim", as = "rose-pine" })
+
+    -- Autopairs
+    use({
+        "windwp/nvim-autopairs",
+        -- event = "InsertEnter",
+        config = function()
+            require("nvim-autopairs").setup()
+        end,
+    })
+
+    -- Wakatime
+    use({ "wakatime/vim-wakatime", opt = false })
+
+    -- Fomatting with None-ls
+    -- Drop-in replacement for null-ls
+    use("nvimtools/none-ls.nvim")
+
+    -- Gruvbox
+    use({ "ellisonleao/gruvbox.nvim" })
+
+    -- Tokyonight colorscheme
+    use({
+        "folke/tokyonight.nvim",
+        opt = false,
+        lazy = true,
+        priority = 1000,
+        opts = {},
+    })
+
+    -- Catappuccin colorscheme
+    --
+    -- Ref: https://github.com/catppuccin/nvim#Compile
+    use({ "catppuccin/nvim", as = "catppuccin", opt = false })
+
+    -- Vim Surround
+    use({
+        "kylechui/nvim-surround",
+        tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+        config = function()
+            require("nvim-surround").setup()
+        end,
+    })
+
+    -- Diffview
+    -- Link: https://github.com/sindrets/diffview.nvim
+    use("sindrets/diffview.nvim")
+
+    -- Vim tmux navigator
+    use("christoomey/vim-tmux-navigator")
+
+    if bootstrap_packer then
+        require("packer").sync()
+    end
+end)
+
+-- ======================== MODULES ========================
+require("codemage.mason")
+require("codemage.commands")
+require("codemage.diffview")
+require("codemage.lsp")
+require("codemage.options")
+require("codemage.telescope")
+require("codemage.keymaps")
+require("codemage.null-ls")
+require("codemage.toggleterm")
+require("codemage.refactor")
+require("codemage.harpoon")
+require("codemage.utils")
+require("codemage.theme")
+require("codemage.colorscheme.gruvbox")
+require("codemage.colorscheme.catappucin")
+-- require('codemage.diagramming.diagram')
+require("codemage.diagramming.venn")
+
+-- ======================== KEYMAPS ========================
+--
+local keymap = vim.keymap
+
+-- Unbind space to leader key
+keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+-- getting used to Ctrl+c is not my thing
+keymap.set("i", "<C-c>", "<Nop>")
+
+vim.api.nvim_set_keymap(
+    "n",
+    "<leader>q",
+    ":q<CR>",
+    { noremap = true, silent = true }
+)
+
+-- Glow preview (for markdowns)
+-- pm means, preview markdown
+vim.keymap.set(
+    "n",
+    "<leader>pmf",
+    ":Glow<CR>",
+    { desc = "[p]review [m]arkdown [f]ile" }
+)
+
+-- Undo tree for the Win!
+keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
+-- Make text selection move up and down in selection mode
+keymap.set("v", "J", ":m '>+1<cr>gv=gv")
+keymap.set("v", "K", ":m '<-2<cr>gv=gv")
+
+-- Use <Ctrl-x'> to make a bash script executable
+keymap.set("n", "<leader>x", "<cmd>silent !chmod +x %<cr>")
+
+keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sess-man<cr>")
+
+-- Keep cursor at the middle of the buffer at all times
+-- ..when Ctrl+d is pressed to scroll to the bottom of the page
+-- ..and when the reverse is done with Ctrl+u
+keymap.set("n", "<C-d>", "<C-d>zz")
+keymap.set("n", "<C-u>", "<C-u>zz")
+
+-- Quickfist list, LocLists and Buffers
+keymap.set("n", "<leader>nc", ":cnext<cr>")
+keymap.set("n", "<leader>pc", ":cprev<cr>")
+keymap.set("n", "<leader>nb", ":bnext<cr>")
+keymap.set("n", "<leader>bp", ":bprev<cr>")
+keymap.set("n", "<leader>nl", ":lnext<cr>")
+keymap.set("n", "<leader>pl", ":lprev<cr>")
+
+-- reload nvim configuration
+keymap.set("n", "<leader><leader>", function()
+    vim.notify("Reloading nvim configuration...", vim.log.levels.INFO)
+    vim.cmd([[ source $MYVIMRC ]])
+    vim.notify("Vim config reloaded!", vim.log.levels.INFO)
+end)
+
+--
+-- ******************************** Tests ********************************
+vim.g["test#strategy"] = "neovim"
+vim.g["test#strategy#suite"] = "vimux"
+vim.g["test#neovim#term_position"] = "vert"
+vim.g["test#neovim#term_repl_command"] = "vsplit"

@@ -1,0 +1,9 @@
+find
+grep
+pgrep
+tr
+awk
+sed
+strace
+lsof
+

@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# roots to search (edit as you like)
+SEARCH_ROOTS=(
+  "$HOME/projects"
+  "$HOME/dev"
+  "$HOME/personal"
+  "$HOME/personal/interviews"
+  "$HOME/work/wamiri"
+  "$HOME/.dotfiles"
+  "$HOME/.config"
+  "$HOME/forks"
+)
+
+# only keep existing roots
+roots=()
+for r in "${SEARCH_ROOTS[@]}"; do
+  [[ -d "$r" ]] && roots+=("$r")
+done
+
+if [[ $# -eq 1 ]]; then
+  selected=$1
+else
+  # Find directories, prune common big/irrelevant dirs, print paths
+  selected=$(
+    find "${roots[@]}" \
+      \( -name node_modules -o -name .git -o -name .venv -o -name __pycache__ \) -prune -o \
+      -mindepth 1 -type d -print \
+    | fzf --height=40% --reverse --border --ansi
+  )
+fi
+
+# nothing chosen
+if [[ -z "${selected:-}" ]]; then
+  exit 0
+fi
+
+# ensure we have an absolute path (fzf output is absolute here)
+# sanitize session name: replace non-alnum with underscore
+selected_name=$(basename "$selected")
+selected_name=${selected_name//[^a-zA-Z0-9_-]/_}
+
+# make sure tmux detection is safe
+tmux_running=$(pgrep tmux || true)
+
+if [[ -z "${TMUX:-}" ]] && [[ -z "$tmux_running" ]]; then
+  tmux new-session -s "$selected_name" -c "$selected"
+  exit 0
+fi
+
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+  tmux new-session -ds "$selected_name" -c "$selected"
+fi
+
+if [[ -z "${TMUX:-}" ]]; then
+  tmux attach -t "$selected_name"
+else
+  tmux switch-client -t "$selected_name"
+fi
+

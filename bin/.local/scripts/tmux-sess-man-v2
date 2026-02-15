@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SEARCH_ROOTS=(
+	"$HOME/projects"
+	"$HOME/dev"
+	"$HOME/personal"
+	"$HOME/.dotfiles"
+	"$HOME/.config"
+	"$HOME/forks"
+	"$HOME/konohagakure"
+)
+
+IGNORE_DIRS=(
+	"node_modules"
+	".git"
+	".venv"
+	"__pycache__"
+)
+
+# only keep existing roots
+roots=()
+for r in "${SEARCH_ROOTS[@]}"; do
+	[[ -d "$r" ]] && roots+=("$r")
+done
+
+if [[ $# -eq 1 ]]; then
+	selected=$1
+else
+	# selected=$(find ~/projects ~/dev ~/personal ~/personal/interviews/ ~/.dotfiles ~/.config ~/forks -mindepth 1 -maxdepth 3 -type d | fzf)
+	selected=$(
+		find ~/projects ~/konohagakure ~/projects ~/dev ~/personal ~/.dotfiles ~/.config ~/forks \
+			-not -path '*/node_modules/*' \
+			-not -path '*/.git/*' \
+			-not -path '*/.venv/*' \
+			-not -path '*/__pycache__/*' \
+			-mindepth 1 -maxdepth 3 -type d | fzf
+	)
+
+	# selected=$(
+	# 	find "${roots[@]}" \
+	# 		\( -name node_modules -o -name .git -o -name .venv -o -name __pycache__ \) -prune -o \
+	# 		-mindepth 1 -type d -print |
+	# 		fzf --height=40% --reverse --border --ansi
+	# )
+fi
+
+# nothing is chosen?
+if [[ -z $selected ]]; then
+	exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+	tmux new-session -s $selected_name -c $selected
+	exit 0
+fi
+
+if ! tmux has-session -t=$selected_name 2>/dev/null; then
+	tmux new-session -ds $selected_name -c $selected
+fi
+
+if [[ -z $TMUX ]]; then
+	tmux attach -t $selected_name
+else
+	tmux switch-client -t $selected_name
+fi
