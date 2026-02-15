@@ -110,7 +110,7 @@ export EDITOR='nvim'
 
 export ARCHFLAGS="-arch x86_64"     # Compilation flags
 export CC=clang
-[ -f "$XDG_CONFIG_HOME/sh_aliases" ] && source "$XDG_CONFIG_HOME/sh_aliases"
+[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
 # Java SDK
 export SDKMAN_DIR="$HOME/.sdkman"
