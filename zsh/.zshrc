@@ -2,20 +2,19 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # autoload -U add-zsh-hook
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit
+compinit
 
-# Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export XDG_CONFIG_HOME="$HOME/.config"
+
 
 # Should speed up NVIM startup
 #
 # @see https://stackoverflow.com/questions/62499268/zsh-shell-taking-abnormally-long-time-during-initial-startup
-#
-# alternative  approach: 
-# ```bash
-#
 # [[ $UID = 0 || -n $SUDO_USER ]] && compinit -u || compinit
-# ```
-[[ $UID = 0 || -n $SUDO_USER ]] && compinit -u || compinit
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -106,20 +105,10 @@ fi
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
 export EDITOR='nvim'
-# else
-#   export EDITOR='nvim'
-# fi
-#
-# Compilation flags
-export ARCHFLAGS="-arch x86_64"
 
+export ARCHFLAGS="-arch x86_64"     # Compilation flags
 export CC=clang
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -239,7 +228,7 @@ GOBINPATH=$HOME/go/bin
 export PATH=$PATH:$GOBINPATH
 
 # Jira
-export JIRA_API_TOKEN=ATATT3xFfGF0yaqh-Mzgh7KlSJAhrT9sKGoRLVl09a7HbepJH4k0II4ftYplr9GRoqPlVxDY-gbwhNUypsBKug4bqOGRQ7ZqviJpo9fXcsUUgx-cOoBLle9ekkLK6UnTPMO4b02cmEFpvMDaa9eYuSY1wja3Iib8YCipanu5pmMK76CGPXVYQ54=14FD4D24
+export JIRA_API_TOKEN=
 
 # pnpm
 export PNPM_HOME="/home/erioluwa/.local/share/pnpm"
@@ -276,9 +265,6 @@ fpath=(~/.zsh.d/ $fpath)
 
 # prometheus multiproc dir
 export PROMETHEUS_MULTIPROC_DIR="/tmp/prometheus"
-
-# working with demo testing branch of QC bills payment on VPS
-alias mount-qc-vps='sshfs myvps:/home/eri/qccore ~/vps_qc -o auto_cache,reconnect,follow_symlinks'
 
 # PORT
 export ROBOT_NAME="robot\$ocean-integration"
