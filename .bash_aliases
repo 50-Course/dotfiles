@@ -4,6 +4,7 @@
 # alias dart="fvm dart"
 alias spacelink='$HOME/vpn/vpn.sh'
 alias v='nvim'
+# alias just testing sometign
 
 # git
 alias gw='git worktree '
