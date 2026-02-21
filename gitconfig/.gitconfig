@@ -1,0 +1,20 @@
+[credential]
+	credentialStore = none
+	helper = store
+[user]
+	email = eridotdev@gmail.com
+	name = 50-Course
+# Enable fsmonitor, untrackedCache, and commitGraph for better performance
+# ref: https://www.git-tower.com/blog/the-ultimate-guide-to-git-config
+[core]
+	fsmonitor = true
+	untrackedCache = true
+	commitGraph = true
+[gc]
+	writeCommitGraph = true
+[fetch]
+	writeCommitGraph = true
+[includeIf "gitdir:~/konohagakure/qccore/"]
+    path = .gitconfig-qc
+[includeIf "gitdir:~/dev/ocean/"]
+    path = .gitconfig-port
