@@ -371,6 +371,45 @@ $DRY_RUN || {
   log::success "~/.zshrc finalised"
 }
 
+# ─── 16. Version Control Managers ─────────────────────────────────────────────────────────────────────
+log::section "Version Control Managers"
+if has_cmd git; then
+    log::skip "git is already installed"
+else
+    log::info "Installing git..."
+    if is_macos; then
+        brew::install git
+    elif is_linux; then
+        pkg::install git git git git
+    fi
+    log::success "git installed"
+fi
+
+if has_cmd gh; then
+    log::skip "GitHub CLI is already installed"
+else
+    log::info "Installing GitHub CLI..."
+    if is_macos; then
+        brew::install gh
+    elif is_linux; then
+        pkg::install gh gh gh gh
+    fi
+    log::success "GitHub CLI installed"
+fi
+
+if has_cmd glab; then
+    log::skip "GitLab CLI is already installed"
+else
+    log::info "Installing GitLab CLI..."
+    if is_macos; then
+        brew::install glab
+    elif is_linux; then
+        pkg::install glab glab glab glab
+    fi
+    log::success "GitLab CLI installed"
+fi
+
+
 # ─── Done ─────────────────────────────────────────────────────────────────────
 log::section "All done"
 echo -e "${GREEN}${BOLD}"
