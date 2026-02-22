@@ -16,5 +16,5 @@
 	writeCommitGraph = true
 [includeIf "gitdir:~/konohagakure/qccore/"]
     path = .gitconfig-qc
-[includeIf "gitdir:~/dev/ocean/"]
+[includeIf "gitdir:~/dev/port/ocean/"]
     path = .gitconfig-port
