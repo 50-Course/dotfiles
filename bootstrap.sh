@@ -251,8 +251,11 @@ elif has_cmd nvm; then
   log::info "Installing Node ${NODE_LTS}..."
   nvm install "${NODE_LTS}"
   nvm use "${NODE_LTS}"
-  nvm alias default "${NODE_LTS}"
-  log::success "Node $(node -v) active; npm $(npm -v)"
+
+  # Resolve the actual version string (e.g. v24.1.0) before aliasing. --lts is a valid flag for `nvm install/use` but not for `nvm alias`.
+  RESOLVED_NODE_VERSION="$(node -v)"
+  nvm alias default "${RESOLVED_NODE_VERSION}"
+  log::success "Node ${RESOLVED_NODE_VERSION} active; npm $(npm -v)"
 else
   log::warn "nvm not in this session — run 'nvm install ${NODE_LTS}' after restarting your shell"
 fi
